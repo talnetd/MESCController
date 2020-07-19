@@ -1,82 +1,23 @@
+<div class="col-sm-3 col-md-2 sidebar bg-secondary">
 
-
-    <div class="sidebar">
-      <div class="sidebar-wrapper">
-        <div class="logo">
-          <a href="https://appseed.us/admin-dashboards/flask-dashboard-material-design" class="simple-text logo-mini">
-            FD
-          </a>
-          <a href="https://appseed.us/admin-dashboards/flask-dashboard-material-design" class="simple-text logo-normal">
-            Flask Dashboard
-          </a>
-        </div>
-
+    <ul class="nav nav-sidebar">
         {% if current_user.is_authenticated %}
-        <ul class="nav">
-          <li class="active ">
-            <a href="/">
-              <i class="tim-icons icon-chart-pie-36"></i>
-              <p>Dashboard</p>
-            </a>
-          </li>
-          <li>
-            <a href="/ui-icons">
-              <i class="tim-icons icon-atom"></i>
-              <p>Icons</p>
-            </a>
-          </li>
-          <li>
-            <a href="/ui-maps">
-              <i class="tim-icons icon-pin"></i>
-              <p>Maps</p>
-            </a>
-          </li>
-          <li>
-            <a href="/ui-notifications">
-              <i class="tim-icons icon-bell-55"></i>
-              <p>Notifications</p>
-            </a>
-          </li>
-          <li>
-            <a href="/page-user">
-              <i class="tim-icons icon-single-02"></i>
-              <p>User Profile</p>
-            </a>
-          </li>
-          <li>
-            <a href="/ui-tables">
-              <i class="tim-icons icon-puzzle-10"></i>
-              <p>Table List</p>
-            </a>
-          </li>
-          <li>
-            <a href="/ui-typography">
-              <i class="tim-icons icon-align-center"></i>
-              <p>Typography</p>
-            </a>
-          </li>
 
-          <li>
-            <a href="/page-rtl-support">
-              <i class="tim-icons icon-world"></i>
-              <p>RTL Support</p>
-            </a>
-          </li>
-          <li>
-            <a href={{ url_for('base_blueprint.logout') }} >
-              <i class="tim-icons icon-user-run"></i>
-              <p>Logout</p>
-            </a>
-          </li>
+        <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Reports</a></li>
+        <li><a href="#">Analytics</a></li>
+        <li><a href="#">Export</a></li>
 
-          <li class="active-pro">
-            <a href="https://appseed.us/admin-dashboards/flask-dashboard-material-design">
-              <i class="tim-icons icon-spaceship"></i>
-              <p>See product</p>
-            </a>
-          </li>
-        </ul>
+        <li><a href="">Nav item</a></li>
+        <li><a href="">Nav item again</a></li>
+        <li><a href="">One more nav</a></li>
+        <li><a href="">Another nav item</a></li>
+        <li><a href="">More navigation</a></li>
+
+        <li><a href="">Nav item again</a></li>
+        <li><a href="">One more nav</a></li>
+        <li><a href="">Another nav item</a></li>
+
         {% endif %}
-        
-      </div>
-    </div>
+    </ul>
+</div>

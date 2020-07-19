@@ -18,7 +18,7 @@ class Config(object):
 
     # For 'in memory' database, please use:
     # SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
-            
+
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # THEME SUPPORT
@@ -27,6 +27,7 @@ class Config(object):
     #    /static/<DEFAULT_THEME>/filename
     # DEFAULT_THEME = "themes/dark"
     DEFAULT_THEME = None
+    APPLICATION_NAME = 'MESC Controller'
 
 
 class ProductionConfig(Config):
