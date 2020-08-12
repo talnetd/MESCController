@@ -2,7 +2,7 @@
 A simple flask backend to serve as a controller for microtranscations between
 merchants,users and vendors.
 
-# OVERALL ARCHITECTURE
+### OVERALL ARCHITECTURE
 ![OVERALL ARCHITECTURE](media/ARCHITECTURE.png?raw=true "Overall Architecture")
 *Overall archtecture of the gateway*
 
