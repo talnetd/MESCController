@@ -5,16 +5,17 @@ Copyright (c) 2019 - TALNET
 """
 
 import os
-from   os import environ
+from os import environ
+
 
 class Config(object):
 
-    basedir    = os.path.abspath(os.path.dirname(__file__))
+    basedir = os.path.abspath(os.path.dirname(__file__))
 
-    SECRET_KEY = 'key'
+    SECRET_KEY = "key"
 
     # This will create a file in <app> FOLDER
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'database.db')
+    SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir, "database.db")
 
     # For 'in memory' database, please use:
     # SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
@@ -27,7 +28,8 @@ class Config(object):
     #    /static/<DEFAULT_THEME>/filename
     # DEFAULT_THEME = "themes/dark"
     DEFAULT_THEME = None
-    APPLICATION_NAME = 'MESC Controller'
+    APPLICATION_NAME = "MESC Controller"
+    USER_AUTO_LOGIN_AFTER_REGISTER = False
 
 
 class ProductionConfig(Config):
@@ -39,12 +41,12 @@ class ProductionConfig(Config):
     REMEMBER_COOKIE_DURATION = 3600
 
     # PostgreSQL database
-    SQLALCHEMY_DATABASE_URI = 'postgresql://{}:{}@{}:{}/{}'.format(
-        environ.get('APPSEED_DATABASE_USER', 'appseed'),
-        environ.get('APPSEED_DATABASE_PASSWORD', 'appseed'),
-        environ.get('APPSEED_DATABASE_HOST', 'db'),
-        environ.get('APPSEED_DATABASE_PORT', 5432),
-        environ.get('APPSEED_DATABASE_NAME', 'appseed')
+    SQLALCHEMY_DATABASE_URI = "postgresql://{}:{}@{}:{}/{}".format(
+        environ.get("APPSEED_DATABASE_USER", "appseed"),
+        environ.get("APPSEED_DATABASE_PASSWORD", "appseed"),
+        environ.get("APPSEED_DATABASE_HOST", "db"),
+        environ.get("APPSEED_DATABASE_PORT", 5432),
+        environ.get("APPSEED_DATABASE_NAME", "appseed"),
     )
 
 
@@ -52,7 +54,4 @@ class DebugConfig(Config):
     DEBUG = True
 
 
-config_dict = {
-    'Production': ProductionConfig,
-    'Debug': DebugConfig
-}
+config_dict = {"Production": ProductionConfig, "Debug": DebugConfig}
