@@ -34,7 +34,7 @@ $
 $ # Set up the DEBUG environment
 $ # (Unix/Mac) export FLASK_ENV=development
 $
-$ flask run --host=0.0.0.0 --port=5000
+$ FLASK_APP='run:app' flask run --host=0.0.0.0 --port=5000
 $
 $ # Access the dashboard in browser: http://127.0.0.1:5000/
 ```
