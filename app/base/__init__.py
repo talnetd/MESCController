@@ -4,7 +4,11 @@ License: MIT
 Copyright (c) 2019 - present AppSeed.us
 """
 
-from flask import Blueprint
+from flask import Blueprint, url_for
+from flask_admin.contrib.sqla import ModelView
+from app import admin, db
+from app.base import models
+
 
 blueprint = Blueprint(
     "base_blueprint",
@@ -13,3 +17,16 @@ blueprint = Blueprint(
     template_folder="templates",
     static_folder="static",
 )
+
+
+admin.add_view(ModelView(models.User, db.session))
+admin.add_view(ModelView(models.Meterboxes, db.session))
+admin.add_view(ModelView(models.Bills, db.session))
+admin.add_view(ModelView(models.BillsDetails, db.session))
+admin.add_view(ModelView(models.PaymentInfoCard, db.session))
+admin.add_view(ModelView(models.PaymentInfoGeneric, db.session))
+admin.add_view(ModelView(models.PaymentMethods, db.session))
+admin.add_view(ModelView(models.Providers, db.session))
+admin.add_view(ModelView(models.Retailers, db.session))
+admin.add_view(ModelView(models.UserPaymentSettings, db.session))
+admin.add_view(ModelView(models.Transactions, db.session))

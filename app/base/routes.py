@@ -4,6 +4,8 @@ License: MIT
 Copyright (c) 2019 - present AppSeed.us
 """
 
+import os
+from flask import send_from_directory
 from flask import jsonify, render_template, redirect, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 
@@ -18,6 +20,13 @@ from app.base.util import verify_pass
 @blueprint.route("/")
 def route_default():
     return redirect(url_for("base_blueprint.login"))
+
+
+@blueprint.route("/favicon.ico")
+def favicon():
+    return send_from_directory(
+        os.path.join(blueprint.root_path, "static/assets/img"), "favicon.png"
+    )
 
 
 @blueprint.route("/error-<error>")

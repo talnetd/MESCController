@@ -5,14 +5,17 @@ Copyright (c) 2019 - present AppSeed.us
 """
 
 from flask import Flask, url_for
+from flask_admin import Admin
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from importlib import import_module
 from logging import basicConfig, DEBUG, getLogger, StreamHandler
 from os import path
 
+
 db = SQLAlchemy()
 login_manager = LoginManager()
+admin = Admin(name="Admin Interface", template_mode="bootstrap3")
 
 
 def register_extensions(app):
@@ -88,4 +91,6 @@ def create_app(config, selenium=False):
     configure_database(app)
     configure_logs(app)
     apply_themes(app)
+    admin.init_app(app)
+
     return app

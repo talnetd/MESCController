@@ -6,3 +6,4 @@ flask_sqlalchemy
 flask-bootstrap
 email_validator
 gunicorn
+Flask-Admin==1.5.6
