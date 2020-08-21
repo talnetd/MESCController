@@ -92,13 +92,40 @@ class Transactions(ModelView):
 db.create_all()
 
 
-appbuilder.add_view(MeterboxView, "Meterboxes", icon="fa-folder-open-o", category="Manage")
+appbuilder.add_view(
+    MeterboxView, "Meterboxes", icon="fa-folder-open-o", category="Manage"
+)
 appbuilder.add_view(BillView, "Bills", icon="fa-folder-open-o", category="Bill")
-appbuilder.add_view(BillDetailView, "Bill Details", icon="fa-folder-open-o", category="Bill")
-appbuilder.add_view(PaymentInfoCardView, "Payment Info - Card", icon="fa-folder-open-o", category="Payment")
-appbuilder.add_view(PaymentInfoGenericView, "Payment Info - Generic", icon="fa-folder-open-o", category="Payment")
-appbuilder.add_view(PaymentMethodsView, "Payment Methods", icon="fa-folder-open-o", category="Payment")
-appbuilder.add_view(ProvidersView, "Providers", icon="fa-folder-open-o", category="Manage")
-appbuilder.add_view(RetailersView, "Retailers", icon="fa-folder-open-o", category="Manage")
-appbuilder.add_view(UserPaymentSettingsView, "Payment Settings", icon="fa-folder-open-o", category="Payment")
-appbuilder.add_view(Transactions, "Transactions", icon="fa-folder-open-o", category="Manage")
+appbuilder.add_view(
+    BillDetailView, "Bill Details", icon="fa-folder-open-o", category="Bill"
+)
+appbuilder.add_view(
+    PaymentInfoCardView,
+    "Payment Info - Card",
+    icon="fa-folder-open-o",
+    category="Payment",
+)
+appbuilder.add_view(
+    PaymentInfoGenericView,
+    "Payment Info - Generic",
+    icon="fa-folder-open-o",
+    category="Payment",
+)
+appbuilder.add_view(
+    PaymentMethodsView, "Payment Methods", icon="fa-folder-open-o", category="Payment"
+)
+appbuilder.add_view(
+    ProvidersView, "Providers", icon="fa-folder-open-o", category="Manage"
+)
+appbuilder.add_view(
+    RetailersView, "Retailers", icon="fa-folder-open-o", category="Manage"
+)
+appbuilder.add_view(
+    UserPaymentSettingsView,
+    "Payment Settings",
+    icon="fa-folder-open-o",
+    category="Payment",
+)
+appbuilder.add_view(
+    Transactions, "Transactions", icon="fa-folder-open-o", category="Manage"
+)
