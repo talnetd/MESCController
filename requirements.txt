@@ -1,9 +1,2 @@
-flask
-flask_login
-flask_migrate
-flask_wtf
-flask_sqlalchemy
-flask-bootstrap
-email_validator
+flask-appbuilder
 gunicorn
-Flask-Admin==1.5.6
