@@ -14,7 +14,10 @@ from sqlalchemy import (
     DateTime,
     Float,
     Text,
+    ForeignKey,
 )
+from sqlalchemy.orm import relationship
+
 from app import db, login_manager
 
 from app.base.util import hash_pass
@@ -75,7 +78,7 @@ class Bills(db.Model):
     id = Column(Integer, primary_key=True)
     reading_date = Column(DateTime)
     due_date = Column(DateTime)
-    meterbox_id = Column(Integer)
+    meterbox_id = Column(Integer, ForeignKey("meterboxes.id"))
     previous_reading = Column(Integer)
     current_reading = Column(Integer)
     diff_reading = Column(Integer)
@@ -84,6 +87,7 @@ class Bills(db.Model):
     horsepower_fee = Column(Float)
     grand_total = Column(Float)
     remark = Column(Text)
+    meterbox = relationship("Meterboxes")
 
 
 class BillsDetails(db.Model):
@@ -91,11 +95,12 @@ class BillsDetails(db.Model):
     __tablename__ = "bills_detail"
 
     id = Column(Integer, primary_key=True)
-    bill_id = Column(Integer)
+    bill_id = Column(Integer, ForeignKey("bills.id"))
     line_item = Column(String(512))
     unit_price = Column(Float)
     quantity = Column(Integer)
     line_total = Column(Float)
+    bill = relationship("Bills")
 
 
 class PaymentInfoCard(db.Model):
@@ -149,10 +154,11 @@ class UserPaymentSettings(db.Model):
     __tablename__ = "user_payment_settings"
 
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer)
+    user_id = Column(Integer, ForeignKey("User.id"))
     payment_info_type = Column(String(512))
     payment_info_id = Column(Integer)
     is_primary = Column(Boolean)
+    user = relationship("User")
 
 
 class Transactions(db.Model):
@@ -163,7 +169,9 @@ class Transactions(db.Model):
     transaction_date = Column(DateTime)
     payer_type = Column(String(512))
     payer_id = Column(Integer)
-    bill_id = Column(Integer)
-    payment_setting_id = Column(Integer)
+    bill_id = Column(Integer, ForeignKey("bills.id"))
+    payment_setting_id = Column(Integer, ForeignKey("user_payment_settings.id"))
     grand_total = Column(Float)
     remark = Column(Text)
+    bill = relationship("Bills")
+    payment_setting = relationship("UserPaymentSettings")
