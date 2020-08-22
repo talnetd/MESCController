@@ -50,6 +50,22 @@ def page_not_found(e):
     )
 
 
+class RegionsView(ModelView):
+    datamodel = SQLAInterface(models.Regions)
+
+
+class TownshipsView(ModelView):
+    datamodel = SQLAInterface(models.Townships)
+
+
+class TitlesView(ModelView):
+    datamodel = SQLAInterface(models.Titles)
+
+
+class CustomersView(ModelView):
+    datamodel = SQLAInterface(models.Customers)
+
+
 class MeterboxView(ModelView):
     datamodel = SQLAInterface(models.Meterboxes)
 
@@ -94,49 +110,38 @@ db.create_all()
 
 
 appbuilder.add_view(
-    MeterboxView,
-    "Meterboxes",
-    label=_("Meterboxes"),
+    RegionsView,
+    "Regions",
+    label=_("Regions"),
     icon="fa-folder-open-o",
     category="Manage",
     category_label=_("Manage"),
 )
 appbuilder.add_view(
-    BillView,
-    "Bills",
-    label=_("Bills"),
+    TownshipsView,
+    "Townships",
+    label=_("Townships"),
     icon="fa-folder-open-o",
-    category="Bill",
-    category_label=_("Bill"),
+    category="Manage",
+)
+# appbuilder.add_separator("Manage")
+appbuilder.add_view(
+    TitlesView, "Titles", label=_("Titles"), icon="fa-folder-open-o", category="Manage"
 )
 appbuilder.add_view(
-    BillDetailView,
-    "Bill Details",
-    label=_("Bill Details"),
+    CustomersView,
+    "Customers",
+    label=_("Customers"),
     icon="fa-folder-open-o",
-    category="Bill",
+    category="Manage",
 )
+# appbuilder.add_separator("Manage")
 appbuilder.add_view(
-    PaymentInfoCardView,
-    "Payment Info - Card",
-    label=_("Payment Info - Card"),
+    MeterboxView,
+    "Meterboxes",
+    label=_("Meterboxes"),
     icon="fa-folder-open-o",
-    category="Payment",
-    category_label=_("Payment"),
-)
-appbuilder.add_view(
-    PaymentInfoGenericView,
-    "Payment Info - Generic",
-    label=_("Payment Info - Generic"),
-    icon="fa-folder-open-o",
-    category="Payment",
-)
-appbuilder.add_view(
-    PaymentMethodsView,
-    "Payment Methods",
-    label=_("Payment Methods"),
-    icon="fa-folder-open-o",
-    category="Payment",
+    category="Manage",
 )
 appbuilder.add_view(
     ProvidersView,
@@ -153,16 +158,54 @@ appbuilder.add_view(
     category="Manage",
 )
 appbuilder.add_view(
-    UserPaymentSettingsView,
-    "Payment Settings",
-    label=_("Payment Settings"),
-    icon="fa-folder-open-o",
-    category="Payment",
-)
-appbuilder.add_view(
     Transactions,
     "Transactions",
     label=_("Transactions"),
     icon="fa-folder-open-o",
     category="Manage",
 )
+appbuilder.add_view(
+    BillView,
+    "submenu_bills",
+    label=_("Bills"),
+    icon="fa-folder-open-o",
+    category="Bill",
+    category_label=_("Bill"),
+)
+appbuilder.add_view(
+    BillDetailView,
+    "submenu_bill_details",
+    label=_("Bill Details"),
+    icon="fa-folder-open-o",
+    category="Bill",
+)
+appbuilder.add_view(
+    PaymentInfoCardView,
+    "submenu_payment_info_card",
+    label=_("Payment Info - Card"),
+    icon="fa-folder-open-o",
+    category="Payment",
+    category_label=_("Payment"),
+)
+appbuilder.add_view(
+    PaymentInfoGenericView,
+    "submenu_payment_info_generic",
+    label=_("Payment Info - Generic"),
+    icon="fa-folder-open-o",
+    category="Payment",
+)
+appbuilder.add_view(
+    PaymentMethodsView,
+    "submenu_payment_methods",
+    label=_("Payment Methods"),
+    icon="fa-folder-open-o",
+    category="Payment",
+)
+appbuilder.add_view(
+    UserPaymentSettingsView,
+    "submenu_payment_settings",
+    label=_("Payment Settings"),
+    icon="fa-folder-open-o",
+    category="Payment",
+)
+# appbuilder.security_cleanup()

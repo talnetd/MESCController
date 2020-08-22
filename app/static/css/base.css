@@ -13,3 +13,8 @@
 .navbar-brand {
     padding: 5px !important;
 }
+
+/* modifications for theme: spacelab.css */
+.panel-heading > .panel-title > .accordion-toggle {
+    color: #666666 !important;
+}

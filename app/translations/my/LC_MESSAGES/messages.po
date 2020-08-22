@@ -57,11 +57,11 @@ msgstr "ပေးချေမှုနည်းလမ်းများ"
 
 #: app/views.py:136
 msgid "Providers"
-msgstr "ပေးသူ"
+msgstr "ငွေကြေးဝန်ဆောင်မှုပေးသူများ"
 
 #: app/views.py:139
 msgid "Retailers"
-msgstr "လက်လီရောင်းသူများ"
+msgstr "ကိုယ်စားလှယ်များ"
 
 #: app/views.py:143
 msgid "Payment Settings"

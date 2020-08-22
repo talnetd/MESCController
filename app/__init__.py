@@ -2,6 +2,7 @@ import logging
 
 from flask import Flask
 from flask_appbuilder import AppBuilder, SQLA
+from app.index import MESCIndexView
 
 """
  Logging configuration
@@ -13,7 +14,9 @@ logging.getLogger().setLevel(logging.DEBUG)
 app = Flask(__name__)
 app.config.from_object("config")
 db = SQLA(app)
-appbuilder = AppBuilder(app, db.session, base_template="base.html")
+appbuilder = AppBuilder(
+    app, db.session, base_template="base.html", indexview=MESCIndexView
+)
 
 
 """
