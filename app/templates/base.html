@@ -1,0 +1,10 @@
+{% extends 'appbuilder/baselayout.html' %}
+
+{% block head_meta %}
+    <link rel="icon" href="{{url_for('static', filename='images/mesc.png')}}" type="image/png" sizes="16x16 32x32 48x48 64x64">
+{% endblock %}
+
+{% block head_css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/base.css')}}"></link>
+{% endblock %}

@@ -1,0 +1,15 @@
+@media (min-width: 768px) {
+    .navbar {
+        border-radius: unset !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar {
+        border-radius: unset !important;
+    }
+}
+
+.navbar-brand {
+    padding: 5px !important;
+}

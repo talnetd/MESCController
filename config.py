@@ -27,7 +27,9 @@ CSRF_ENABLED = True
 APP_NAME = "MESC Controller"
 
 # Uncomment to setup Setup an App icon
-# APP_ICON = "static/img/logo.jpg"
+APP_ICON = "/static/images/mesc.png"
+# APP_ICON = "https://lh3.googleusercontent.com/JJ1Co79xMZ2EOO98aX7tiJS3CjGDW4MeqjwZb0LayioFKJQUiTBF80nQasRP3aHEzwet"
+# APP_ICON = "https://www.royalbellsmm.com/upload/customers_logo/mesc.png"
 
 # ----------------------------------------------------
 # AUTHENTICATION CONFIG
@@ -99,13 +101,100 @@ IMG_UPLOAD_URL = "/static/uploads/"
 # APP_THEME = "bootstrap-theme.css"  # default bootstrap
 # APP_THEME = "cerulean.css"
 # APP_THEME = "amelia.css"
-APP_THEME = "cosmo.css"
+# APP_THEME = "cosmo.css"
 # APP_THEME = "cyborg.css"
 # APP_THEME = "flatly.css"
 # APP_THEME = "journal.css"
 # APP_THEME = "readable.css"
 # APP_THEME = "simplex.css"
 # APP_THEME = "slate.css"
-# APP_THEME = "spacelab.css"
+APP_THEME = "spacelab.css"
 # APP_THEME = "united.css"
 # APP_THEME = "yeti.css"
+
+FAB_ROLES = {
+    "User": [
+        # profile setting
+        ["UserDBModelView", "resetmypassword"],
+        ["UserDBModelView", "can_userinfo"],
+        ["UserDBModelView", "userinfoedit"],
+        ["UserInfoEditView", "can_this_form_get"],
+        ["UserInfoEditView", "can_this_form_post"],
+        ["ResetMyPasswordView", "can_this_form_get"],
+        ["ResetMyPasswordView", "can_this_form_post"],
+        # app menus
+        ["MeterboxView", "can_delete"],
+        ["MeterboxView", "can_show"],
+        ["MeterboxView", "can_edit"],
+        ["MeterboxView", "can_add"],
+        ["MeterboxView", "can_list"],
+        ["MeterboxView", "can_download"],
+        ["BillView", "can_download"],
+        ["BillView", "can_edit"],
+        ["BillView", "can_delete"],
+        ["BillView", "can_show"],
+        ["BillView", "can_add"],
+        ["BillView", "can_list"],
+        ["BillDetailView", "can_download"],
+        ["BillDetailView", "can_edit"],
+        ["BillDetailView", "can_delete"],
+        ["BillDetailView", "can_show"],
+        ["BillDetailView", "can_add"],
+        ["BillDetailView", "can_list"],
+        ["PaymentInfoCardView", "can_download"],
+        ["PaymentInfoCardView", "can_edit"],
+        ["PaymentInfoCardView", "can_delete"],
+        ["PaymentInfoCardView", "can_show"],
+        ["PaymentInfoCardView", "can_add"],
+        ["PaymentInfoCardView", "can_list"],
+        ["PaymentInfoGenericView", "can_download"],
+        ["PaymentInfoGenericView", "can_edit"],
+        ["PaymentInfoGenericView", "can_delete"],
+        ["PaymentInfoGenericView", "can_show"],
+        ["PaymentInfoGenericView", "can_add"],
+        ["PaymentInfoGenericView", "can_list"],
+        ["PaymentMethodsView", "can_download"],
+        ["PaymentMethodsView", "can_edit"],
+        ["PaymentMethodsView", "can_delete"],
+        ["PaymentMethodsView", "can_show"],
+        ["PaymentMethodsView", "can_add"],
+        ["PaymentMethodsView", "can_list"],
+        ["ProvidersView", "can_download"],
+        ["ProvidersView", "can_edit"],
+        ["ProvidersView", "can_delete"],
+        ["ProvidersView", "can_show"],
+        ["ProvidersView", "can_add"],
+        ["ProvidersView", "can_list"],
+        ["RetailersView", "can_download"],
+        ["RetailersView", "can_edit"],
+        ["RetailersView", "can_delete"],
+        ["RetailersView", "can_show"],
+        ["RetailersView", "can_add"],
+        ["RetailersView", "can_list"],
+        ["UserPaymentSettingsView", "can_download"],
+        ["UserPaymentSettingsView", "can_edit"],
+        ["UserPaymentSettingsView", "can_delete"],
+        ["UserPaymentSettingsView", "can_show"],
+        ["UserPaymentSettingsView", "can_add"],
+        ["UserPaymentSettingsView", "can_list"],
+        ["Transactions", "can_download"],
+        ["Transactions", "can_edit"],
+        ["Transactions", "can_delete"],
+        ["Transactions", "can_show"],
+        ["Transactions", "can_add"],
+        ["Transactions", "can_list"],
+        ["Manage", "menu_access"],
+        ["Meterboxes", "menu_access"],
+        ["Bills", "menu_access"],
+        ["Bill", "menu_access"],
+        ["Bill Details", "menu_access"],
+        ["Payment Info - Card", "menu_access"],
+        ["Payment Info - Generic", "menu_access"],
+        ["Payment", "menu_access"],
+        ["Providers", "menu_access"],
+        ["Retailers", "menu_access"],
+        ["Payment Settings", "menu_access"],
+        ["Transactions", "menu_access"],
+        ["Payment Methods", "menu_access"],
+    ]
+}
