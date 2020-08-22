@@ -1,0 +1,77 @@
+# Burmese translations for PROJECT.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-08-22 16:35+0630\n"
+"PO-Revision-Date: 2020-08-22 16:50+0630\n"
+"Language: my\n"
+"Language-Team: Team-MYMM\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+"Last-Translator: \n"
+"X-Generator: Poedit 2.4.1\n"
+
+#: app/views.py:98
+msgid "Meterboxes"
+msgstr "မီတာပုံးများ"
+
+#: app/views.py:101 app/views.py:136
+msgid "Manage"
+msgstr "စီမံရန်"
+
+#: app/views.py:106
+msgid "Bills"
+msgstr "မီတာဘေလ်များ"
+
+#: app/views.py:109
+msgid "Bill"
+msgstr "ရှင်းတမ်း"
+
+#: app/views.py:113
+msgid "Bill Details"
+msgstr "ရှင်းတမ်းအသေးစိတ်"
+
+#: app/views.py:117
+msgid "Payment Info - Card"
+msgstr "ငွေပေးချေမှုအချက်အလက် - ကဒ်"
+
+#: app/views.py:119
+msgid "Payment"
+msgstr "ပေးချေမှု"
+
+#: app/views.py:125
+msgid "Payment Info - Generic"
+msgstr "ငွေပေးချေမှုအချက်အလက် - အထွေထွေ"
+
+#: app/views.py:131
+msgid "Payment Methods"
+msgstr "ပေးချေမှုနည်းလမ်းများ"
+
+#: app/views.py:136
+msgid "Providers"
+msgstr "ပေးသူ"
+
+#: app/views.py:139
+msgid "Retailers"
+msgstr "လက်လီရောင်းသူများ"
+
+#: app/views.py:143
+msgid "Payment Settings"
+msgstr "ငွေးပေးချေမှုဆိုင်ရာ အပြင်အဆင်များ"
+
+#: app/views.py:148
+msgid "Transactions"
+msgstr "Transactions"
+
+#: app/templates/404.html:4
+msgid "Page not found"
+msgstr "စာမျက်နှာကို မတွေ့ပါ"
+

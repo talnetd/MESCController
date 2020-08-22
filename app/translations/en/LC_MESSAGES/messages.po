@@ -1,71 +1,72 @@
-# Translations template for PROJECT.
+# English translations for PROJECT.
 # Copyright (C) 2020 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-08-22 16:41+0630\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2020-08-22 16:35+0630\n"
+"PO-Revision-Date: 2020-08-22 16:35+0630\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
 
-#: app/views.py:99
+#: app/views.py:98
 msgid "Meterboxes"
 msgstr ""
 
-#: app/views.py:102 app/views.py:149
+#: app/views.py:101 app/views.py:136
 msgid "Manage"
 msgstr ""
 
-#: app/views.py:108
+#: app/views.py:106
 msgid "Bills"
 msgstr ""
 
-#: app/views.py:111
+#: app/views.py:109
 msgid "Bill"
 msgstr ""
 
-#: app/views.py:117
+#: app/views.py:113
 msgid "Bill Details"
 msgstr ""
 
-#: app/views.py:124
+#: app/views.py:117
 msgid "Payment Info - Card"
 msgstr ""
 
-#: app/views.py:126
+#: app/views.py:119
 msgid "Payment"
 msgstr ""
 
-#: app/views.py:133
+#: app/views.py:125
 msgid "Payment Info - Generic"
 msgstr ""
 
-#: app/views.py:140
+#: app/views.py:131
 msgid "Payment Methods"
 msgstr ""
 
-#: app/views.py:147
+#: app/views.py:136
 msgid "Providers"
 msgstr ""
 
-#: app/views.py:154
+#: app/views.py:139
 msgid "Retailers"
 msgstr ""
 
-#: app/views.py:161
+#: app/views.py:143
 msgid "Payment Settings"
 msgstr ""
 
-#: app/views.py:168
+#: app/views.py:148
 msgid "Transactions"
 msgstr ""
 

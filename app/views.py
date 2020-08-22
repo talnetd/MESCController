@@ -1,6 +1,7 @@
 from flask import render_template
 from flask_appbuilder.models.sqla.interface import SQLAInterface
 from flask_appbuilder import ModelView, ModelRestApi
+from flask_babel import lazy_gettext as _
 
 from . import appbuilder, db
 from . import models
@@ -95,51 +96,76 @@ db.create_all()
 appbuilder.add_view(
     MeterboxView,
     "Meterboxes",
+    label=_("Meterboxes"),
     icon="fa-folder-open-o",
     category="Manage",
-    category_label="Manage",
+    category_label=_("Manage"),
     category_icon="fa-cog",
 )
 appbuilder.add_view(
     BillView,
     "Bills",
+    label=_("Bills"),
     icon="fa-folder-open-o",
     category="Bill",
-    category_label="Bill",
+    category_label=_("Bill"),
     category_icon="fa-list-alt",
 )
 appbuilder.add_view(
-    BillDetailView, "Bill Details", icon="fa-folder-open-o", category="Bill"
+    BillDetailView,
+    "Bill Details",
+    label=_("Bill Details"),
+    icon="fa-folder-open-o",
+    category="Bill",
 )
 appbuilder.add_view(
     PaymentInfoCardView,
     "Payment Info - Card",
+    label=_("Payment Info - Card"),
     icon="fa-folder-open-o",
     category="Payment",
-    category_label="Payment",
+    category_label=_("Payment"),
     category_icon="fa-credit-card",
 )
 appbuilder.add_view(
     PaymentInfoGenericView,
     "Payment Info - Generic",
+    label=_("Payment Info - Generic"),
     icon="fa-folder-open-o",
     category="Payment",
 )
 appbuilder.add_view(
-    PaymentMethodsView, "Payment Methods", icon="fa-folder-open-o", category="Payment",
+    PaymentMethodsView,
+    "Payment Methods",
+    label=_("Payment Methods"),
+    icon="fa-folder-open-o",
+    category="Payment",
 )
 appbuilder.add_view(
-    ProvidersView, "Providers", icon="fa-folder-open-o", category="Manage"
+    ProvidersView,
+    "Providers",
+    label=_("Providers"),
+    icon="fa-folder-open-o",
+    category="Manage",
 )
 appbuilder.add_view(
-    RetailersView, "Retailers", icon="fa-folder-open-o", category="Manage"
+    RetailersView,
+    "Retailers",
+    label=_("Retailers"),
+    icon="fa-folder-open-o",
+    category="Manage",
 )
 appbuilder.add_view(
     UserPaymentSettingsView,
     "Payment Settings",
+    label=_("Payment Settings"),
     icon="fa-folder-open-o",
     category="Payment",
 )
 appbuilder.add_view(
-    Transactions, "Transactions", icon="fa-folder-open-o", category="Manage"
+    Transactions,
+    "Transactions",
+    label=_("Transactions"),
+    icon="fa-folder-open-o",
+    category="Manage",
 )
