@@ -93,9 +93,21 @@ db.create_all()
 
 
 appbuilder.add_view(
-    MeterboxView, "Meterboxes", icon="fa-folder-open-o", category="Manage"
+    MeterboxView,
+    "Meterboxes",
+    icon="fa-folder-open-o",
+    category="Manage",
+    category_label="Manage",
+    category_icon="fa-cog",
 )
-appbuilder.add_view(BillView, "Bills", icon="fa-folder-open-o", category="Bill")
+appbuilder.add_view(
+    BillView,
+    "Bills",
+    icon="fa-folder-open-o",
+    category="Bill",
+    category_label="Bill",
+    category_icon="fa-list-alt",
+)
 appbuilder.add_view(
     BillDetailView, "Bill Details", icon="fa-folder-open-o", category="Bill"
 )
@@ -104,6 +116,8 @@ appbuilder.add_view(
     "Payment Info - Card",
     icon="fa-folder-open-o",
     category="Payment",
+    category_label="Payment",
+    category_icon="fa-credit-card",
 )
 appbuilder.add_view(
     PaymentInfoGenericView,
@@ -112,7 +126,7 @@ appbuilder.add_view(
     category="Payment",
 )
 appbuilder.add_view(
-    PaymentMethodsView, "Payment Methods", icon="fa-folder-open-o", category="Payment"
+    PaymentMethodsView, "Payment Methods", icon="fa-folder-open-o", category="Payment",
 )
 appbuilder.add_view(
     ProvidersView, "Providers", icon="fa-folder-open-o", category="Manage"
