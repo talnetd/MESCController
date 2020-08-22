@@ -100,7 +100,6 @@ appbuilder.add_view(
     icon="fa-folder-open-o",
     category="Manage",
     category_label=_("Manage"),
-    category_icon="fa-cog",
 )
 appbuilder.add_view(
     BillView,
@@ -109,7 +108,6 @@ appbuilder.add_view(
     icon="fa-folder-open-o",
     category="Bill",
     category_label=_("Bill"),
-    category_icon="fa-list-alt",
 )
 appbuilder.add_view(
     BillDetailView,
@@ -125,7 +123,6 @@ appbuilder.add_view(
     icon="fa-folder-open-o",
     category="Payment",
     category_label=_("Payment"),
-    category_icon="fa-credit-card",
 )
 appbuilder.add_view(
     PaymentInfoGenericView,
