@@ -1,4 +1,5 @@
 from flask_appbuilder import Model
+from flask_appbuilder.models.mixins import AuditMixin
 from sqlalchemy import (
     Column,
     Integer,
@@ -9,6 +10,7 @@ from sqlalchemy import (
     Text,
     Boolean,
 )
+from flask_babel import get_locale
 from sqlalchemy.orm import relationship
 
 """
@@ -21,15 +23,91 @@ AuditMixin will add automatic timestamp of created and modified by who
 """
 
 
-class Meterboxes(Model):
+class Regions(AuditMixin, Model):
+
+    __tablename__ = "regions"
+    id = Column(Integer, primary_key=True)
+    name_en = Column(String(128))
+    name_my = Column(String(256))
+
+    def __str__(self):
+        current_locale = get_locale()
+        attr_name = f"name_{current_locale}"
+        if hasattr(self, attr_name):
+            return getattr(self, attr_name)
+
+
+class Townships(AuditMixin, Model):
+
+    __tablename__ = "townships"
+    id = Column(Integer, primary_key=True)
+    name_en = Column(String(128))
+    name_my = Column(String(256))
+    region_id = Column(Integer, ForeignKey("regions.id"))
+    region = relationship("Regions")
+
+    def __str__(self):
+        current_locale = get_locale()
+        attr_name = f"name_{current_locale}"
+        if hasattr(self, attr_name):
+            return getattr(self, attr_name)
+
+
+class Titles(AuditMixin, Model):
+
+    __tablename__ = "titles"
+    id = Column(Integer, primary_key=True)
+    name_en = Column(String(16))
+    name_my = Column(String(32))
+
+    def __str__(self):
+        current_locale = get_locale()
+        attr_name = f"name_{current_locale}"
+        if hasattr(self, attr_name):
+            return getattr(self, attr_name)
+
+
+class Customers(AuditMixin, Model):
+
+    __tablename__ = "customers"
+
+    id = Column(Integer, primary_key=True)
+    title_id = Column(Integer, ForeignKey("titles.id"))
+    name_en = Column(String(256))
+    name_my = Column(String(512))
+    nrc_number = Column(String(256))
+    township_id = Column(Integer, ForeignKey("townships.id"))
+    region_id = Column(Integer, ForeignKey("regions.id"))
+    address = Column(String(2048))
+    phones = Column(String(512))
+    title = relationship("Titles")
+    township = relationship("Townships")
+    region = relationship("Regions")
+
+    def __str__(self):
+        current_locale = get_locale()
+        attr_name = f"name_{current_locale}"
+        result = ""
+        if hasattr(self, attr_name):
+            result = getattr(self, attr_name)
+        if result:
+            result += " "
+        result += f"({self.township} - {self.region})"
+        return result
+
+
+class Meterboxes(AuditMixin, Model):
 
     __tablename__ = "meterboxes"
 
     id = Column(Integer, primary_key=True)
     box_number = Column(String(512))
 
+    def __str__(self):
+        return self.box_number
 
-class Bills(Model):
+
+class Bills(AuditMixin, Model):
 
     __tablename__ = "bills"
 
@@ -48,7 +126,7 @@ class Bills(Model):
     meterbox = relationship("Meterboxes")
 
 
-class BillsDetails(Model):
+class BillsDetails(AuditMixin, Model):
 
     __tablename__ = "bills_detail"
 
@@ -61,7 +139,7 @@ class BillsDetails(Model):
     bill = relationship("Bills")
 
 
-class PaymentInfoCard(Model):
+class PaymentInfoCard(AuditMixin, Model):
 
     __tablename__ = "payment_info_card"
 
@@ -73,7 +151,7 @@ class PaymentInfoCard(Model):
     cvv_cvc = Column(String(512))
 
 
-class PaymentInfoGeneric(Model):
+class PaymentInfoGeneric(AuditMixin, Model):
 
     __tablename__ = "payment_info_generic"
 
@@ -82,7 +160,7 @@ class PaymentInfoGeneric(Model):
     setting = Column(Text)
 
 
-class PaymentMethods(Model):
+class PaymentMethods(AuditMixin, Model):
 
     __tablename__ = "payment_methods"
 
@@ -90,7 +168,7 @@ class PaymentMethods(Model):
     name = Column(String(512))
 
 
-class Providers(Model):
+class Providers(AuditMixin, Model):
 
     __tablename__ = "providers"
 
@@ -99,7 +177,7 @@ class Providers(Model):
     name = Column(String(512))
 
 
-class Retailers(Model):
+class Retailers(AuditMixin, Model):
 
     __tablename__ = "retailers"
 
@@ -107,19 +185,19 @@ class Retailers(Model):
     name = Column(String(512))
 
 
-class UserPaymentSettings(Model):
+class UserPaymentSettings(AuditMixin, Model):
 
     __tablename__ = "user_payment_settings"
 
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey("ab_user.id"))
+    customer_id = Column(Integer, ForeignKey("customers.id"))
     payment_info_type = Column(String(512))
     payment_info_id = Column(Integer)
     is_primary = Column(Boolean)
-    user = relationship("User")
+    customer = relationship("Customers")
 
 
-class Transactions(Model):
+class Transactions(AuditMixin, Model):
 
     __tablename__ = "transactions"
 
