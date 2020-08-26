@@ -92,7 +92,7 @@ class Customers(AuditMixin, Model):
             result = getattr(self, attr_name)
         if result:
             result += " "
-        result += f"({self.township} - {self.region})"
+        result += f"({self.address} - {self.township} - {self.region})"
         return result
 
 
@@ -102,9 +102,11 @@ class Meterboxes(AuditMixin, Model):
 
     id = Column(Integer, primary_key=True)
     box_number = Column(String(512))
+    customer_id = Column(Integer, ForeignKey("customers.id"))
+    customer = relationship("Customers")
 
     def __str__(self):
-        return self.box_number
+        return f"{self.box_number} - {self.customer}"
 
 
 class Bills(AuditMixin, Model):

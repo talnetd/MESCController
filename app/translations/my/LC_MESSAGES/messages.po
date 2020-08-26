@@ -156,7 +156,7 @@ msgstr "မီတာဖတ်သည့်နေ့"
 
 #: app/views.py:207
 msgid "Due Date"
-msgstr "နောင် ဖတ်မည့်နေ့"
+msgstr "နောက်ဆုံးပေးဆောင်ရက်"
 
 #: app/views.py:208
 msgid "Previous Reading"
