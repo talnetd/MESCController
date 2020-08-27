@@ -2,7 +2,7 @@ from app import db
 from app.models import Regions
 
 
-data = [{"name_en": "Mandalay Division", "name_my": "မန္တလေးတိုင်းဒေသကြီး"}]
+data = [{"name_en": "Mandalay Region", "name_my": "မန္တလေးတိုင်းဒေသကြီး"}]
 
 
 def seed(user=None):

@@ -89,7 +89,7 @@ class Customers(AuditMixin, Model):
         attr_name = f"name_{current_locale}"
         result = ""
         if hasattr(self, attr_name):
-            result = getattr(self, attr_name)
+            result = getattr(self, attr_name) or ""
         if result:
             result += " "
         result += f"({self.address} - {self.township} - {self.region})"
