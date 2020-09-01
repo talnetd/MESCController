@@ -190,6 +190,8 @@ class BillView(MescBaseModelView):
     datamodel = SQLAInterface(models.Bills)
     list_columns = [
         "id",
+        "account_no",
+        "ref_code",
         "reading_date",
         "due_date",
         "meterbox",
@@ -203,6 +205,8 @@ class BillView(MescBaseModelView):
         "changed_by",
     ]
     label_columns = {
+        "account_no": _("Account No."),
+        "ref_code": _("Reference Code"),
         "reading_date": _("Reading Date"),
         "due_date": _("Due Date"),
         "previous_reading": _("Previous Reading"),

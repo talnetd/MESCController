@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-08-23 00:08+0630\n"
+"POT-Creation-Date: 2020-09-01 23:26+0630\n"
 "PO-Revision-Date: 2020-08-22 16:35+0630\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -17,6 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
+
+#: app/models.py:66
+msgid "Ks {} ({} units and over)"
+msgstr ""
+
+#: app/models.py:69
+msgid "Ks {} (from {} unit(s) to {} units)"
+msgstr ""
 
 #: app/views.py:74 app/views.py:96 app/views.py:118 app/views.py:143
 msgid "Name (En)"
@@ -150,298 +158,307 @@ msgstr ""
 msgid "Meterbox Info"
 msgstr ""
 
-#: app/views.py:206
-msgid "Reading Date"
-msgstr ""
-
-#: app/views.py:207
-msgid "Due Date"
-msgstr ""
-
 #: app/views.py:208
-msgid "Previous Reading"
+msgid "Account No."
 msgstr ""
 
 #: app/views.py:209
-msgid "Current Reading"
+msgid "Reference Code"
 msgstr ""
 
 #: app/views.py:210
-msgid "Reading Difference"
+msgid "Reading Date"
 msgstr ""
 
 #: app/views.py:211
-msgid "Subtotal"
+msgid "Due Date"
 msgstr ""
 
 #: app/views.py:212
-msgid "Maintenance Fee"
+msgid "Previous Reading"
 msgstr ""
 
 #: app/views.py:213
-msgid "Horsepower Fee"
+msgid "Current Reading"
 msgstr ""
 
 #: app/views.py:214
-msgid "Grand Total"
+msgid "Reading Difference"
 msgstr ""
 
 #: app/views.py:215
-msgid "Remark"
+msgid "Subtotal"
 msgstr ""
 
 #: app/views.py:216
-msgid "Meterbox Number"
+msgid "Maintenance Fee"
+msgstr ""
+
+#: app/views.py:217
+msgid "Horsepower Fee"
 msgstr ""
 
 #: app/views.py:218
-msgid "List Bills"
+msgid "Grand Total"
 msgstr ""
 
 #: app/views.py:219
-msgid "Add Bill"
+msgid "Remark"
 msgstr ""
 
 #: app/views.py:220
+msgid "Meterbox Number"
+msgstr ""
+
+#: app/views.py:222
+msgid "List Bills"
+msgstr ""
+
+#: app/views.py:223
+msgid "Add Bill"
+msgstr ""
+
+#: app/views.py:224
 msgid "Edit Bill"
 msgstr ""
 
-#: app/views.py:221
+#: app/views.py:225
 msgid "Bill Info"
 msgstr ""
 
-#: app/views.py:239 app/views.py:336 app/views.py:408
+#: app/views.py:243 app/views.py:340 app/views.py:412
 msgid "Bill"
 msgstr ""
 
-#: app/views.py:240
+#: app/views.py:244
 msgid "Line Item"
 msgstr ""
 
-#: app/views.py:241
+#: app/views.py:245
 msgid "Unit Price"
 msgstr ""
 
-#: app/views.py:242
+#: app/views.py:246
 msgid "Quantity"
 msgstr ""
 
-#: app/views.py:243
+#: app/views.py:247
 msgid "Line Total"
 msgstr ""
 
-#: app/views.py:245
+#: app/views.py:249
 msgid "List Bill Details"
 msgstr ""
 
-#: app/views.py:246
+#: app/views.py:250
 msgid "Add Bill Detail"
 msgstr ""
 
-#: app/views.py:247
+#: app/views.py:251
 msgid "Edit Bill Detail"
 msgstr ""
 
-#: app/views.py:248
+#: app/views.py:252
 msgid "Bill Detail Info"
 msgstr ""
 
-#: app/views.py:255
+#: app/views.py:259
 msgid "List Payment Info Cards"
 msgstr ""
 
-#: app/views.py:256
+#: app/views.py:260
 msgid "Add Payment Info Card"
 msgstr ""
 
-#: app/views.py:257
+#: app/views.py:261
 msgid "Edit Payment Info Card"
 msgstr ""
 
-#: app/views.py:258
+#: app/views.py:262
 msgid "Payment Info Card"
 msgstr ""
 
-#: app/views.py:265
+#: app/views.py:269
 msgid "List Payment Info Generic"
 msgstr ""
 
-#: app/views.py:266
+#: app/views.py:270
 msgid "Add Payment Info Generic"
 msgstr ""
 
-#: app/views.py:267
+#: app/views.py:271
 msgid "Edit Payment Info Generic"
 msgstr ""
 
-#: app/views.py:268
+#: app/views.py:272
 msgid "Payment Info Generic"
 msgstr ""
 
-#: app/views.py:275
+#: app/views.py:279
 msgid "List Payment Methods"
 msgstr ""
 
-#: app/views.py:276
+#: app/views.py:280
 msgid "Add Payment Method"
 msgstr ""
 
-#: app/views.py:277
+#: app/views.py:281
 msgid "Edit Payment Method"
 msgstr ""
 
-#: app/views.py:278
+#: app/views.py:282
 msgid "Payment Method Info"
 msgstr ""
 
-#: app/views.py:293
+#: app/views.py:297
 msgid "Provider Code"
 msgstr ""
 
-#: app/views.py:294 app/views.py:312
+#: app/views.py:298 app/views.py:316
 msgid "Name"
 msgstr ""
 
-#: app/views.py:296
+#: app/views.py:300
 msgid "List Providers"
 msgstr ""
 
-#: app/views.py:297
+#: app/views.py:301
 msgid "Add Provider"
 msgstr ""
 
-#: app/views.py:298
+#: app/views.py:302
 msgid "Edit Provider"
 msgstr ""
 
-#: app/views.py:299
+#: app/views.py:303
 msgid "Provider Info"
 msgstr ""
 
-#: app/views.py:313
+#: app/views.py:317
 msgid "List Retailers"
 msgstr ""
 
-#: app/views.py:314
+#: app/views.py:318
 msgid "Add Retailer"
 msgstr ""
 
-#: app/views.py:315
+#: app/views.py:319
 msgid "Edit Retailer"
 msgstr ""
 
-#: app/views.py:316
+#: app/views.py:320
 msgid "Retailer Info"
 msgstr ""
 
-#: app/views.py:323
+#: app/views.py:327
 msgid "List User Payment Settings"
 msgstr ""
 
-#: app/views.py:324
+#: app/views.py:328
 msgid "Add User Payment Setting"
 msgstr ""
 
-#: app/views.py:325
+#: app/views.py:329
 msgid "Edit User Payment Setting"
 msgstr ""
 
-#: app/views.py:326
+#: app/views.py:330
 msgid "User Payment Setting Info"
 msgstr ""
 
-#: app/views.py:333
+#: app/views.py:337
 msgid "Transaction Date"
 msgstr ""
 
-#: app/views.py:334
+#: app/views.py:338
 msgid "Agent Type"
 msgstr ""
 
-#: app/views.py:335
+#: app/views.py:339
 msgid "Agent"
 msgstr ""
 
-#: app/views.py:338
+#: app/views.py:342
 msgid "List Transactions"
 msgstr ""
 
-#: app/views.py:339
+#: app/views.py:343
 msgid "Add Transaction"
 msgstr ""
 
-#: app/views.py:340
+#: app/views.py:344
 msgid "Edit Transaction"
 msgstr ""
 
-#: app/views.py:341
+#: app/views.py:345
 msgid "Transaction Info"
 msgstr ""
 
-#: app/views.py:350
+#: app/views.py:354
 msgid "Regions/States"
 msgstr ""
 
-#: app/views.py:353
+#: app/views.py:357
 msgid "Manage"
 msgstr ""
 
-#: app/views.py:358
+#: app/views.py:362
 msgid "Townships"
 msgstr ""
 
-#: app/views.py:364
+#: app/views.py:368
 msgid "Titles"
 msgstr ""
 
-#: app/views.py:369
+#: app/views.py:373
 msgid "Customers"
 msgstr ""
 
-#: app/views.py:377
+#: app/views.py:381
 msgid "Meterboxes"
 msgstr ""
 
-#: app/views.py:384
+#: app/views.py:388
 msgid "Providers"
 msgstr ""
 
-#: app/views.py:391
+#: app/views.py:395
 msgid "Retailers"
 msgstr ""
 
-#: app/views.py:398
+#: app/views.py:402
 msgid "Transactions"
 msgstr ""
 
-#: app/views.py:405
+#: app/views.py:409
 msgid "Bills"
 msgstr ""
 
-#: app/views.py:413
+#: app/views.py:417
 msgid "Bill Details"
 msgstr ""
 
-#: app/views.py:420
+#: app/views.py:424
 msgid "Payment Info - Card"
 msgstr ""
 
-#: app/views.py:423
+#: app/views.py:427
 msgid "Payment"
 msgstr ""
 
-#: app/views.py:428
+#: app/views.py:432
 msgid "Payment Info - Generic"
 msgstr ""
 
-#: app/views.py:435
+#: app/views.py:439
 msgid "Payment Methods"
 msgstr ""
 
-#: app/views.py:442
+#: app/views.py:446
 msgid "Payment Settings"
 msgstr ""
 
 #: app/templates/404.html:4
 msgid "Page not found"
 msgstr ""
+
