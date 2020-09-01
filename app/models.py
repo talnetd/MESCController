@@ -11,6 +11,7 @@ from sqlalchemy import (
     Boolean,
 )
 from flask_babel import get_locale
+from flask_babel import lazy_gettext as _
 from sqlalchemy.orm import relationship
 
 """
@@ -51,6 +52,23 @@ class Townships(AuditMixin, Model):
         attr_name = f"name_{current_locale}"
         if hasattr(self, attr_name):
             return getattr(self, attr_name)
+
+
+class PricingPolicy(AuditMixin, Model):
+
+    __tablename__ = "pricing_policy"
+    id = Column(Integer, primary_key=True)
+    from_unit = Column(Integer)
+    to_unit = Column(Integer, nullable=True)
+    unit_price = Column(Float)
+
+    def __str__(self):
+        label = _("Ks {} ({} units and over)")
+        message = label.format(self.unit_price, self.from_unit)
+        if self.to_unit:
+            label = _("Ks {} (from {} unit(s) to {} units)")
+            message = label.format(self.unit_price, self.from_unit, self.to_unit)
+        return message
 
 
 class Titles(AuditMixin, Model):
@@ -114,9 +132,11 @@ class Bills(AuditMixin, Model):
     __tablename__ = "bills"
 
     id = Column(Integer, primary_key=True)
+    account_no = Column(String(32), nullable=True)
     reading_date = Column(DateTime)
     due_date = Column(DateTime)
     meterbox_id = Column(Integer, ForeignKey("meterboxes.id"))
+    ref_code = Column(String(128), nullable=True)
     previous_reading = Column(Integer)
     current_reading = Column(Integer)
     diff_reading = Column(Integer)
