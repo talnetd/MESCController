@@ -1,6 +1,7 @@
 import os
 import random
 import click
+import uuid
 from datetime import timedelta
 from faker import Faker
 from app import db
@@ -397,6 +398,7 @@ def main(total):
             maintenance_fee=maintenance_fee,
             horsepower_fee=horsepower_fee,
             grand_total=grand_total,
+            ref_code=uuid.uuid1(),
         )
         bill.created_by = user
         bill.changed_by = user

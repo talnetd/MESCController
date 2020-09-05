@@ -13,9 +13,14 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 # Your App secret key
 SECRET_KEY = "\2\1thisismyscretkey\1\2\e\y\y\h"
 
+
 # The SQLAlchemy connection string.
 # SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir, "app.db")
-SQLALCHEMY_DATABASE_URI = "mysql://dbuser:dbuser@192.168.64.7/mesc"
+
+# NOTE:
+# CREATE DATABASE mesc CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+SQLALCHEMY_DATABASE_URI = "mysql://dbuser:dbuser@192.168.64.7/mesc?charset=utf8"
+
 # SQLALCHEMY_DATABASE_URI = 'mysql://myapp@localhost/myapp'
 # SQLALCHEMY_DATABASE_URI = 'postgresql://root:password@localhost/myapp'
 
@@ -42,12 +47,12 @@ APP_ICON = "/static/images/mesc.png"
 # AUTH_LDAP : Is for LDAP
 # AUTH_REMOTE_USER : Is for using REMOTE_USER from web server
 AUTH_TYPE = AUTH_DB
-
+MYSQL_DATABASE_CHARSET = "utf8mb4"
 # Uncomment to setup Full admin role name
-# AUTH_ROLE_ADMIN = 'Admin'
+AUTH_ROLE_ADMIN = "Admin"
 
 # Uncomment to setup Public role name, no authentication needed
-# AUTH_ROLE_PUBLIC = 'Public'
+# AUTH_ROLE_PUBLIC = "Public"
 
 # Will allow user self registration
 # AUTH_USER_REGISTRATION = True
@@ -114,9 +119,16 @@ APP_THEME = "spacelab.css"
 # APP_THEME = "united.css"
 # APP_THEME = "yeti.css"
 
+FAB_API_SWAGGER_UI = True
 
 FAB_ROLES = {
+    "Public": [
+        ["public_menu_check", "menu_access"],
+        ["public_submenu_check_bill_status", "menu_access"],
+    ],
     "Provider": [
+        ["public_menu_check", "menu_access"],
+        ["public_submenu_check_bill_status", "menu_access"],
         ["UserDBModelView", "resetmypassword"],
         ["UserDBModelView", "can_userinfo"],
         ["UserDBModelView", "userinfoedit"],
@@ -133,7 +145,7 @@ FAB_ROLES = {
         # ["Providers", "menu_access"],
         # ["Retailers", "menu_access"],
         ["submenu_payment_settings", "menu_access"],
-        ["Transactions", "menu_access"],
+        ["submenu_transactions", "menu_access"],
         ["submenu_payment_methods", "menu_access"],
         ["submenu_payment_info_generic", "menu_access"],
         ["submenu_payment_info_card", "menu_access"],
@@ -155,24 +167,24 @@ FAB_ROLES = {
         # ["BillDetailView", "can_show"],
         # ["BillDetailView", "can_add"],
         # ["BillDetailView", "can_list"],
-        ["PaymentInfoCardView", "can_download"],
-        ["PaymentInfoCardView", "can_edit"],
-        ["PaymentInfoCardView", "can_delete"],
-        ["PaymentInfoCardView", "can_show"],
-        ["PaymentInfoCardView", "can_add"],
-        ["PaymentInfoCardView", "can_list"],
-        ["PaymentInfoGenericView", "can_download"],
-        ["PaymentInfoGenericView", "can_edit"],
-        ["PaymentInfoGenericView", "can_delete"],
-        ["PaymentInfoGenericView", "can_show"],
-        ["PaymentInfoGenericView", "can_add"],
-        ["PaymentInfoGenericView", "can_list"],
-        ["PaymentMethodsView", "can_download"],
-        ["PaymentMethodsView", "can_edit"],
-        ["PaymentMethodsView", "can_delete"],
-        ["PaymentMethodsView", "can_show"],
-        ["PaymentMethodsView", "can_add"],
-        ["PaymentMethodsView", "can_list"],
+        # ["PaymentInfoCardView", "can_download"],
+        # ["PaymentInfoCardView", "can_edit"],
+        # ["PaymentInfoCardView", "can_delete"],
+        # ["PaymentInfoCardView", "can_show"],
+        # ["PaymentInfoCardView", "can_add"],
+        # ["PaymentInfoCardView", "can_list"],
+        # ["PaymentInfoGenericView", "can_download"],
+        # ["PaymentInfoGenericView", "can_edit"],
+        # ["PaymentInfoGenericView", "can_delete"],
+        # ["PaymentInfoGenericView", "can_show"],
+        # ["PaymentInfoGenericView", "can_add"],
+        # ["PaymentInfoGenericView", "can_list"],
+        # ["PaymentMethodsView", "can_download"],
+        # ["PaymentMethodsView", "can_edit"],
+        # ["PaymentMethodsView", "can_delete"],
+        # ["PaymentMethodsView", "can_show"],
+        # ["PaymentMethodsView", "can_add"],
+        # ["PaymentMethodsView", "can_list"],
         # ["ProvidersView", "can_download"],
         # ["ProvidersView", "can_edit"],
         # ["ProvidersView", "can_delete"],
@@ -185,12 +197,12 @@ FAB_ROLES = {
         # ["RetailersView", "can_show"],
         # ["RetailersView", "can_add"],
         # ["RetailersView", "can_list"],
-        ["UserPaymentSettingsView", "can_download"],
-        ["UserPaymentSettingsView", "can_edit"],
-        ["UserPaymentSettingsView", "can_delete"],
-        ["UserPaymentSettingsView", "can_show"],
-        ["UserPaymentSettingsView", "can_add"],
-        ["UserPaymentSettingsView", "can_list"],
+        # ["UserPaymentSettingsView", "can_download"],
+        # ["UserPaymentSettingsView", "can_edit"],
+        # ["UserPaymentSettingsView", "can_delete"],
+        # ["UserPaymentSettingsView", "can_show"],
+        # ["UserPaymentSettingsView", "can_add"],
+        # ["UserPaymentSettingsView", "can_list"],
         ["Transactions", "can_download"],
         ["Transactions", "can_edit"],
         ["Transactions", "can_delete"],
@@ -215,7 +227,7 @@ FAB_ROLES = {
         # ["Providers", "menu_access"],
         # ["Retailers", "menu_access"],
         ["submenu_payment_settings", "menu_access"],
-        ["Transactions", "menu_access"],
+        ["submenu_transactions", "menu_access"],
         ["submenu_payment_methods", "menu_access"],
         ["submenu_payment_info_generic", "menu_access"],
         ["submenu_payment_info_card", "menu_access"],
@@ -237,24 +249,24 @@ FAB_ROLES = {
         # ["BillDetailView", "can_show"],
         # ["BillDetailView", "can_add"],
         # ["BillDetailView", "can_list"],
-        ["PaymentInfoCardView", "can_download"],
-        ["PaymentInfoCardView", "can_edit"],
-        ["PaymentInfoCardView", "can_delete"],
-        ["PaymentInfoCardView", "can_show"],
-        ["PaymentInfoCardView", "can_add"],
-        ["PaymentInfoCardView", "can_list"],
-        ["PaymentInfoGenericView", "can_download"],
-        ["PaymentInfoGenericView", "can_edit"],
-        ["PaymentInfoGenericView", "can_delete"],
-        ["PaymentInfoGenericView", "can_show"],
-        ["PaymentInfoGenericView", "can_add"],
-        ["PaymentInfoGenericView", "can_list"],
-        ["PaymentMethodsView", "can_download"],
-        ["PaymentMethodsView", "can_edit"],
-        ["PaymentMethodsView", "can_delete"],
-        ["PaymentMethodsView", "can_show"],
-        ["PaymentMethodsView", "can_add"],
-        ["PaymentMethodsView", "can_list"],
+        # ["PaymentInfoCardView", "can_download"],
+        # ["PaymentInfoCardView", "can_edit"],
+        # ["PaymentInfoCardView", "can_delete"],
+        # ["PaymentInfoCardView", "can_show"],
+        # ["PaymentInfoCardView", "can_add"],
+        # ["PaymentInfoCardView", "can_list"],
+        # ["PaymentInfoGenericView", "can_download"],
+        # ["PaymentInfoGenericView", "can_edit"],
+        # ["PaymentInfoGenericView", "can_delete"],
+        # ["PaymentInfoGenericView", "can_show"],
+        # ["PaymentInfoGenericView", "can_add"],
+        # ["PaymentInfoGenericView", "can_list"],
+        # ["PaymentMethodsView", "can_download"],
+        # ["PaymentMethodsView", "can_edit"],
+        # ["PaymentMethodsView", "can_delete"],
+        # ["PaymentMethodsView", "can_show"],
+        # ["PaymentMethodsView", "can_add"],
+        # ["PaymentMethodsView", "can_list"],
         # ["ProvidersView", "can_download"],
         # ["ProvidersView", "can_edit"],
         # ["ProvidersView", "can_delete"],
@@ -267,12 +279,12 @@ FAB_ROLES = {
         # ["RetailersView", "can_show"],
         # ["RetailersView", "can_add"],
         # ["RetailersView", "can_list"],
-        ["UserPaymentSettingsView", "can_download"],
-        ["UserPaymentSettingsView", "can_edit"],
-        ["UserPaymentSettingsView", "can_delete"],
-        ["UserPaymentSettingsView", "can_show"],
-        ["UserPaymentSettingsView", "can_add"],
-        ["UserPaymentSettingsView", "can_list"],
+        # ["UserPaymentSettingsView", "can_download"],
+        # ["UserPaymentSettingsView", "can_edit"],
+        # ["UserPaymentSettingsView", "can_delete"],
+        # ["UserPaymentSettingsView", "can_show"],
+        # ["UserPaymentSettingsView", "can_add"],
+        # ["UserPaymentSettingsView", "can_list"],
         ["Transactions", "can_download"],
         ["Transactions", "can_edit"],
         ["Transactions", "can_delete"],
@@ -281,6 +293,8 @@ FAB_ROLES = {
         ["Transactions", "can_list"],
     ],
     "User": [
+        ["public_menu_check", "menu_access"],
+        ["public_submenu_check_bill_status", "menu_access"],
         # profile setting
         ["UserDBModelView", "resetmypassword"],
         ["UserDBModelView", "can_userinfo"],
@@ -298,7 +312,7 @@ FAB_ROLES = {
         # ["Payment", "menu_access"],
         # ["Providers", "menu_access"],
         # ["Retailers", "menu_access"],
-        # ["Transactions", "menu_access"],
+        # ["submenu_transactions", "menu_access"],
         # ["submenu_payment_info_generic", "menu_access"],
         # ["submenu_payment_info_card", "menu_access"],
         # ["submenu_payment_methods", "menu_access"],

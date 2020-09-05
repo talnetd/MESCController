@@ -14,6 +14,9 @@ from flask_babel import get_locale
 from flask_babel import lazy_gettext as _
 from sqlalchemy.orm import relationship
 
+from . import db
+
+
 """
 
 You can use the extra Flask-AppBuilder fields and Mixin's
@@ -146,6 +149,11 @@ class Bills(AuditMixin, Model):
     grand_total = Column(Float)
     remark = Column(Text)
     meterbox = relationship("Meterboxes")
+    is_billed = Column(Boolean, default=False)
+
+    @classmethod
+    def find_by_ref_code(cls, ref_code):
+        return db.session.query(cls).filter_by(ref_code=ref_code).first()
 
 
 class BillsDetails(AuditMixin, Model):

@@ -1,11 +1,12 @@
-from flask import render_template, redirect
+from flask import render_template
 from flask_appbuilder.models.sqla.interface import SQLAInterface
-from flask_appbuilder import expose, ModelView, ModelRestApi
-from flask_appbuilder.actions import action
+from flask_appbuilder import ModelView
 from flask_babel import lazy_gettext as _
 
 from . import appbuilder, db
 from . import models
+from .form_views import FormViewCheckBillStatus
+from .api_views import BillsAPI
 
 
 """
@@ -348,7 +349,6 @@ class Transactions(MescBaseModelView):
 
 db.create_all()
 
-
 appbuilder.add_view(
     RegionsView,
     "Regions",
@@ -399,7 +399,7 @@ appbuilder.add_view(
 )
 appbuilder.add_view(
     Transactions,
-    "Transactions",
+    "submenu_transactions",
     label=_("Transactions"),
     icon="fa-folder-open-o",
     category="Manage",
@@ -448,4 +448,14 @@ appbuilder.add_view(
     icon="fa-folder-open-o",
     category="Payment",
 )
+appbuilder.add_view(
+    FormViewCheckBillStatus,
+    "public_submenu_check_bill_status",
+    label=_("Bill Status"),
+    icon="fa-folder-open-o",
+    category="public_menu_check",
+    category_label=_("Check"),
+)
+appbuilder.add_api(BillsAPI)
+
 # appbuilder.security_cleanup()
