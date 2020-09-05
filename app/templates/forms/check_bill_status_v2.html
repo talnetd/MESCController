@@ -1,0 +1,32 @@
+{% extends "appbuilder/base.html" %}
+
+{% block navbar %}
+    <div style="padding-top: 20px;"></div>
+{% endblock %}
+
+{% block content %}
+
+    <h3 style="padding-bottom: 12px;">
+        {% trans %}
+            Check Bill Status
+        {% endtrans %}
+    </h3>
+
+    <form method="POST"  class="form-inline">
+        <div class="row">
+            <div class="col-md-8">
+                {{ form.ref_code(style="width: 100%") }}
+                  <span id="helpBlock2" class="help-block">
+                      {{ form.ref_code.description }}
+                  </span>
+            </div>
+            <div class="col-md-4">
+                <button type=submit class="btn btn-primary">{% trans %}Search{% endtrans %} <i class='fa fa-fw fa-search'></i></button>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

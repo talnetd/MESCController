@@ -52,7 +52,7 @@ MYSQL_DATABASE_CHARSET = "utf8mb4"
 AUTH_ROLE_ADMIN = "Admin"
 
 # Uncomment to setup Public role name, no authentication needed
-# AUTH_ROLE_PUBLIC = "Public"
+AUTH_ROLE_PUBLIC = "Public"
 
 # Will allow user self registration
 # AUTH_USER_REGISTRATION = True
@@ -122,10 +122,6 @@ APP_THEME = "spacelab.css"
 FAB_API_SWAGGER_UI = True
 
 FAB_ROLES = {
-    "Public": [
-        ["public_menu_check", "menu_access"],
-        ["public_submenu_check_bill_status", "menu_access"],
-    ],
     "Provider": [
         ["public_menu_check", "menu_access"],
         ["public_submenu_check_bill_status", "menu_access"],

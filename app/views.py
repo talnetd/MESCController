@@ -1,11 +1,11 @@
 from flask import render_template
 from flask_appbuilder.models.sqla.interface import SQLAInterface
-from flask_appbuilder import ModelView
+from flask_appbuilder import ModelView, BaseView, expose
 from flask_babel import lazy_gettext as _
 
 from . import appbuilder, db
 from . import models
-from .form_views import FormViewCheckBillStatus
+from .form_views import ViewCheckBillStatus
 from .api_views import BillsAPI
 
 
@@ -449,7 +449,7 @@ appbuilder.add_view(
     category="Payment",
 )
 appbuilder.add_view(
-    FormViewCheckBillStatus,
+    ViewCheckBillStatus,
     "public_submenu_check_bill_status",
     label=_("Bill Status"),
     icon="fa-folder-open-o",
