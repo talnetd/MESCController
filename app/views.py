@@ -1,10 +1,12 @@
 from flask import render_template
 from flask_appbuilder.models.sqla.interface import SQLAInterface
-from flask_appbuilder import ModelView, ModelRestApi
+from flask_appbuilder import ModelView, BaseView, expose
 from flask_babel import lazy_gettext as _
 
 from . import appbuilder, db
 from . import models
+from .form_views import ViewCheckBillStatus
+from .api_views import BillsAPI
 
 
 """
@@ -190,6 +192,8 @@ class BillView(MescBaseModelView):
     datamodel = SQLAInterface(models.Bills)
     list_columns = [
         "id",
+        "account_no",
+        "ref_code",
         "reading_date",
         "due_date",
         "meterbox",
@@ -203,6 +207,8 @@ class BillView(MescBaseModelView):
         "changed_by",
     ]
     label_columns = {
+        "account_no": _("Account No."),
+        "ref_code": _("Reference Code"),
         "reading_date": _("Reading Date"),
         "due_date": _("Due Date"),
         "previous_reading": _("Previous Reading"),
@@ -343,7 +349,6 @@ class Transactions(MescBaseModelView):
 
 db.create_all()
 
-
 appbuilder.add_view(
     RegionsView,
     "Regions",
@@ -394,7 +399,7 @@ appbuilder.add_view(
 )
 appbuilder.add_view(
     Transactions,
-    "Transactions",
+    "submenu_transactions",
     label=_("Transactions"),
     icon="fa-folder-open-o",
     category="Manage",
@@ -443,4 +448,14 @@ appbuilder.add_view(
     icon="fa-folder-open-o",
     category="Payment",
 )
+appbuilder.add_view(
+    ViewCheckBillStatus,
+    "public_submenu_check_bill_status",
+    label=_("Bill Status"),
+    icon="fa-folder-open-o",
+    category="public_menu_check",
+    category_label=_("Check"),
+)
+appbuilder.add_api(BillsAPI)
+
 # appbuilder.security_cleanup()

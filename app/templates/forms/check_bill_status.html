@@ -1,0 +1,10 @@
+{% extends 'appbuilder/general/model/edit.html' %}
+
+{% block add_tail_js %}
+    <script>
+        (function () {
+            let html_text = "{% trans %}Search{% endtrans %} <i class='fa fa-fw fa-search'></i>";
+            $("button[type='submit']").html(html_text);
+        })();
+    </script>
+{% endblock %}
