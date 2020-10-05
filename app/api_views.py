@@ -17,13 +17,13 @@ class BillsAPI(BaseApi):
 
     resource_name = "bills"
 
-    @expose("/check/public", methods=["GET"])
-    @safe
+    # @expose("/check/public", methods=["GET"])
+    # @safe
     def check_bill_status(self):
         """Check bill status. (PUBLIC API)
         ---
         get:
-          summary: Check Meter Bill Status using Reference Code. Note: This is PUBLIC API.
+          summary: Check Meter Bill Status using Reference Code. This is PUBLIC API.
           responses:
             200:
               description: status of Meter Bill
@@ -56,7 +56,13 @@ class BillsAPI(BaseApi):
         """Check bill status in details. (PROTECTED API)
         ---
         get:
-          summary: Check Meter Bill Status using Reference Code. Note: This is PROTECTED API.
+          summary: Check Meter Bill Status using Reference Code. This is PROTECTED API.
+          parameters:
+            - in: query
+              name: ref_code
+              schema:
+                type: string
+              description: Reference Code for Meter Bill
           responses:
             200:
               description: status of Meter Bill
@@ -77,13 +83,22 @@ class BillsAPI(BaseApi):
                           diff_reading:
                             type: integer
                           sub_total:
-                            type: float
+                            type: number
                           maintenance_fee:
-                            type: float
+                            type: number
                           horsepower_fee:
-                            type: float
+                            type: number
                           grand_total:
-                            type: float
+                            type: number
+                          user:
+                            type: object
+                            properties:
+                              name_en:
+                                type: string
+                              name_my:
+                                type: string
+                              address:
+                                type: string
         """
         resp_data = dict()
         if request.method == "GET":
@@ -99,6 +114,13 @@ class BillsAPI(BaseApi):
                 resp_data["maintenance_fee"] = found.maintenance_fee
                 resp_data["horsepower_fee"] = found.horsepower_fee
                 resp_data["grand_total"] = found.grand_total
+
+                user_data = dict(
+                    name_en=found.meterbox.customer.name_en,
+                    name_my=found.meterbox.customer.name_my,
+                    address=found.meterbox.customer.address,
+                )
+                resp_data.update(user=user_data)
 
             resp_data["is_billed"] = billed
             return self.response(HTTPStatus.OK, data=resp_data)
