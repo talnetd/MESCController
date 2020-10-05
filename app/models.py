@@ -11,7 +11,11 @@ from sqlalchemy import (
     Boolean,
 )
 from flask_babel import get_locale
+from flask_babel import lazy_gettext as _
 from sqlalchemy.orm import relationship
+
+from . import db
+
 
 """
 
@@ -53,6 +57,23 @@ class Townships(AuditMixin, Model):
             return getattr(self, attr_name)
 
 
+class PricingPolicy(AuditMixin, Model):
+
+    __tablename__ = "pricing_policy"
+    id = Column(Integer, primary_key=True)
+    from_unit = Column(Integer)
+    to_unit = Column(Integer, nullable=True)
+    unit_price = Column(Float)
+
+    def __str__(self):
+        label = _("Ks {} ({} units and over)")
+        message = label.format(self.unit_price, self.from_unit)
+        if self.to_unit:
+            label = _("Ks {} (from {} unit(s) to {} units)")
+            message = label.format(self.unit_price, self.from_unit, self.to_unit)
+        return message
+
+
 class Titles(AuditMixin, Model):
 
     __tablename__ = "titles"
@@ -89,10 +110,10 @@ class Customers(AuditMixin, Model):
         attr_name = f"name_{current_locale}"
         result = ""
         if hasattr(self, attr_name):
-            result = getattr(self, attr_name)
+            result = getattr(self, attr_name) or ""
         if result:
             result += " "
-        result += f"({self.township} - {self.region})"
+        result += f"({self.address} - {self.township} - {self.region})"
         return result
 
 
@@ -102,9 +123,11 @@ class Meterboxes(AuditMixin, Model):
 
     id = Column(Integer, primary_key=True)
     box_number = Column(String(512))
+    customer_id = Column(Integer, ForeignKey("customers.id"))
+    customer = relationship("Customers")
 
     def __str__(self):
-        return self.box_number
+        return f"{self.box_number} - {self.customer}"
 
 
 class Bills(AuditMixin, Model):
@@ -112,9 +135,11 @@ class Bills(AuditMixin, Model):
     __tablename__ = "bills"
 
     id = Column(Integer, primary_key=True)
+    account_no = Column(String(32), nullable=True)
     reading_date = Column(DateTime)
     due_date = Column(DateTime)
     meterbox_id = Column(Integer, ForeignKey("meterboxes.id"))
+    ref_code = Column(String(128), nullable=True)
     previous_reading = Column(Integer)
     current_reading = Column(Integer)
     diff_reading = Column(Integer)
@@ -124,6 +149,11 @@ class Bills(AuditMixin, Model):
     grand_total = Column(Float)
     remark = Column(Text)
     meterbox = relationship("Meterboxes")
+    is_billed = Column(Boolean, default=False)
+
+    @classmethod
+    def find_by_ref_code(cls, ref_code):
+        return db.session.query(cls).filter_by(ref_code=ref_code).first()
 
 
 class BillsDetails(AuditMixin, Model):

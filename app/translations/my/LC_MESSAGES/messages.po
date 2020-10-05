@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-08-23 00:08+0630\n"
+"POT-Creation-Date: 2020-09-06 03:31+0630\n"
 "PO-Revision-Date: 2020-08-22 16:50+0630\n"
 "Last-Translator: \n"
 "Language: my\n"
@@ -18,430 +18,486 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
 
-#: app/views.py:74 app/views.py:96 app/views.py:118 app/views.py:143
+#: app/form_views.py:11
+msgid "Check Bill Status"
+msgstr "မီတာခဆောင်ထားမှု စစ်ဆေးရန်"
+
+#: app/form_views.py:22 app/form_views.py:56
+msgid "Congrats! You already have paid Meter Bill for {}."
+msgstr "ဝမ်းမြောက်ပါတယ်။ ရည်ညွှန်းအမှတ် {} အတွက် မီတာခ ဆောင်ပြီးဖြစ်နေပါပြီ။"
+
+#: app/form_views.py:38 app/form_views.py:72
+msgid "Sorry. We could not find Meter Bill for {}."
+msgstr "ဝမ်းနည်းပါတယ်။ ရည်ညွှန်းအမှတ် {} အတွက် မီတာခ အချက်အလက် မတွေ့ပါ။"
+
+#: app/forms.py:10 app/forms.py:19 app/views.py:211
+msgid "Reference Code"
+msgstr "ရည်ညွှန်းကုဒ်နံပါတ်"
+
+#: app/forms.py:11 app/forms.py:20
+msgid "Enter reference code to check Bill Status."
+msgstr "မီတာဆောင်ထားမှု ရှိ/မရှိ စစ်ဆေးရန် ရည်ညွှန်းအမှတ်ကို ရိုက်ပါ။"
+
+#: app/models.py:69
+msgid "Ks {} ({} units and over)"
+msgstr "{} ကျပ် ({} ယူနစ်မှ အထက်)"
+
+#: app/models.py:72
+msgid "Ks {} (from {} unit(s) to {} units)"
+msgstr "{} ကျပ် ({} ယူနစ်မှ {} ယူနစ်အထိ)"
+
+#: app/views.py:76 app/views.py:98 app/views.py:120 app/views.py:145
 msgid "Name (En)"
 msgstr "အမည် (အင်္ဂလိပ်)"
 
-#: app/views.py:75 app/views.py:97 app/views.py:119 app/views.py:144
+#: app/views.py:77 app/views.py:99 app/views.py:121 app/views.py:146
 msgid "Name (My)"
 msgstr "အမည် (မြန်မာ)"
 
-#: app/views.py:77
+#: app/views.py:79
 msgid "List Regions/States"
 msgstr "တိုင်း/ပြည်နယ်များ စာရင်း"
 
-#: app/views.py:78
+#: app/views.py:80
 msgid "Add Region/State"
 msgstr "တိုင်း/ပြည်နယ် အသစ်ထည့်ရန်"
 
-#: app/views.py:79
+#: app/views.py:81
 msgid "Edit Region/State"
 msgstr "တိုင်း/ပြည်နယ် ပြင်ဆင်ရန်"
 
-#: app/views.py:80
+#: app/views.py:82
 msgid "Region/State Info"
 msgstr "တိုင်း/ပြည်နယ် အချက်အလက်"
 
-#: app/views.py:98
+#: app/views.py:100
 msgid "Region/State"
 msgstr "တိုင်း/ပြည်နယ်"
 
-#: app/views.py:100
+#: app/views.py:102
 msgid "List Townships"
 msgstr "မြို့နယ်များ စာရင်း"
 
-#: app/views.py:101
+#: app/views.py:103
 msgid "Add Township"
 msgstr "မြို့နယ် အသစ်ထည့်ရန်"
 
-#: app/views.py:102
+#: app/views.py:104
 msgid "Edit Township"
 msgstr "မြို့နယ် ပြင်ဆင်ရန်"
 
-#: app/views.py:103
+#: app/views.py:105
 msgid "Township Info"
 msgstr "မြို့နယ် အချက်အလက်"
 
-#: app/views.py:121
+#: app/views.py:123
 msgid "List Titles"
 msgstr "ဂုဏ်ပုဒ် စာရင်း"
 
-#: app/views.py:122
+#: app/views.py:124
 msgid "Add Title"
 msgstr "ဂုဏ်ပုဒ် အသစ်ထည့်ရန်"
 
-#: app/views.py:123
+#: app/views.py:125
 msgid "Edit Title"
 msgstr "ဂုဏ်ပုဒ် ပြင်ဆင်ရန်"
 
-#: app/views.py:124
+#: app/views.py:126
 msgid "Title Info"
 msgstr "ဂုဏ်ပုဒ် အချက်အလက်"
 
-#: app/views.py:142
+#: app/views.py:144
 msgid "Title"
 msgstr "ဂုဏ်ပုဒ်"
 
-#: app/views.py:145
+#: app/views.py:147
 msgid "N.R.C"
 msgstr "မှတ်ပုံတင်နံပါတ်"
 
-#: app/views.py:146
+#: app/views.py:148
 msgid "Address"
 msgstr "လိပ်စာ"
 
-#: app/views.py:147
+#: app/views.py:149
 msgid "Region"
 msgstr "တိုင်း"
 
-#: app/views.py:148
+#: app/views.py:150
 msgid "Township"
 msgstr "မြို့နယ်"
 
-#: app/views.py:149
+#: app/views.py:151
 msgid "Phones"
 msgstr "ဖုန်းနံပါတ်များ"
 
-#: app/views.py:152 app/views.py:157 app/views.py:162
+#: app/views.py:154 app/views.py:159 app/views.py:164
 msgid "Naming"
 msgstr "အမည်ဆိုင်ရာ"
 
-#: app/views.py:153 app/views.py:158 app/views.py:163
+#: app/views.py:155 app/views.py:160 app/views.py:165
 msgid "Additional"
 msgstr "အခြားအချက်အလက်"
 
-#: app/views.py:154 app/views.py:159 app/views.py:164
+#: app/views.py:156 app/views.py:161 app/views.py:166
 msgid "Contact"
 msgstr "ဆက်သွယ်ရန်"
 
-#: app/views.py:166
+#: app/views.py:168
 msgid "List Customers"
 msgstr "သုံးစွဲသူများ စာရင်း"
 
-#: app/views.py:167
+#: app/views.py:169
 msgid "Add Customer"
 msgstr "သုံးစွဲသူ အသစ်ထည့်ရန်"
 
-#: app/views.py:168
+#: app/views.py:170
 msgid "Edit Customer"
 msgstr "သုံးစွဲသူ ပြင်ဆင်ရန်"
 
-#: app/views.py:169
+#: app/views.py:171
 msgid "Customer Info"
 msgstr "သုံးစွဲသူဆိုင်ရာ အချက်အလက်"
 
-#: app/views.py:182
+#: app/views.py:184
 msgid "Box Number"
 msgstr "မီတာပုံးအမှတ်"
 
-#: app/views.py:183
+#: app/views.py:185
 msgid "List Meterboxes"
 msgstr "မီတာပုံး စာရင်း"
 
-#: app/views.py:184
+#: app/views.py:186
 msgid "Add Meterbox"
 msgstr "မီတာပုံး အသစ်ထည့်ရန်"
 
-#: app/views.py:185
+#: app/views.py:187
 msgid "Edit Meterbox"
 msgstr "မီတာပုံး ပြင်ဆင်ရန်"
 
-#: app/views.py:186
+#: app/views.py:188
 msgid "Meterbox Info"
 msgstr "မီတာပုံး အချက်အလက်"
 
-#: app/views.py:206
+#: app/views.py:210
+msgid "Account No."
+msgstr "ငွေစာရင်းအမှတ်"
+
+#: app/views.py:212
 msgid "Reading Date"
 msgstr "မီတာဖတ်သည့်နေ့"
 
-#: app/views.py:207
+#: app/views.py:213
 msgid "Due Date"
-msgstr "နောင် ဖတ်မည့်နေ့"
+msgstr "နောက်ဆုံးပေးဆောင်ရက်"
 
-#: app/views.py:208
+#: app/views.py:214
 msgid "Previous Reading"
 msgstr "အရင်လ ဖတ်ခြင်း"
 
-#: app/views.py:209
+#: app/views.py:215
 msgid "Current Reading"
 msgstr "ယခု ဖတ်ခြင်း"
 
-#: app/views.py:210
+#: app/views.py:216
 msgid "Reading Difference"
 msgstr "မီတာဖတ်ခြင်း ကွာခြားမှု"
 
-#: app/views.py:211
+#: app/views.py:217
 msgid "Subtotal"
 msgstr "စုစုပေါင်း"
 
-#: app/views.py:212
+#: app/views.py:218
 msgid "Maintenance Fee"
 msgstr "မီတာထိန်းသိမ်းခ"
 
-#: app/views.py:213
+#: app/views.py:219
 msgid "Horsepower Fee"
 msgstr "မြင်းကောင်ရေခ"
 
-#: app/views.py:214
+#: app/views.py:220
 msgid "Grand Total"
 msgstr "ပေးသွင်းရန် စုစုပေါင်း"
 
-#: app/views.py:215
+#: app/views.py:221
 msgid "Remark"
 msgstr "မှတ်ချက်"
 
-#: app/views.py:216
+#: app/views.py:222
 msgid "Meterbox Number"
 msgstr "မီတာပုံးအမှတ်"
 
-#: app/views.py:218
+#: app/views.py:224
 msgid "List Bills"
 msgstr "ရှင်းတမ်း စာရင်း"
 
-#: app/views.py:219
+#: app/views.py:225
 msgid "Add Bill"
 msgstr "ရှင်းတမ်း အသစ်ထည့်ရန်"
 
-#: app/views.py:220
+#: app/views.py:226
 msgid "Edit Bill"
 msgstr "ရှင်းတမ်း ပြင်ဆင်ရန်"
 
-#: app/views.py:221
+#: app/views.py:227
 msgid "Bill Info"
 msgstr "ရှင်းတမ်း အချက်အလက်"
 
-#: app/views.py:239 app/views.py:336 app/views.py:408
+#: app/views.py:245 app/views.py:342 app/views.py:413
 msgid "Bill"
 msgstr "ရှင်းတမ်း"
 
-#: app/views.py:240
+#: app/views.py:246
 msgid "Line Item"
 msgstr ""
 
-#: app/views.py:241
+#: app/views.py:247
 msgid "Unit Price"
 msgstr "ယူနစ်ဈေး"
 
-#: app/views.py:242
+#: app/views.py:248
 msgid "Quantity"
 msgstr "အရေအတွက်"
 
-#: app/views.py:243
+#: app/views.py:249
 msgid "Line Total"
 msgstr "စုစုပေါင်း"
 
-#: app/views.py:245
+#: app/views.py:251
 msgid "List Bill Details"
 msgstr "ရှင်းတမ်း အသေးစိတ် စာရင်း"
 
-#: app/views.py:246
+#: app/views.py:252
 msgid "Add Bill Detail"
 msgstr "ရှင်းတမ်း အသေးစိတ် ထည့်ရန်"
 
-#: app/views.py:247
+#: app/views.py:253
 msgid "Edit Bill Detail"
 msgstr "ရှင်းတမ်း အသေးစိတ် ပြင်ဆင်ရန်"
 
-#: app/views.py:248
+#: app/views.py:254
 msgid "Bill Detail Info"
 msgstr "ရှင်းတမ်း အသေးစိတ် အချက်အလက်"
 
-#: app/views.py:255
+#: app/views.py:261
 msgid "List Payment Info Cards"
 msgstr ""
 
-#: app/views.py:256
+#: app/views.py:262
 msgid "Add Payment Info Card"
 msgstr ""
 
-#: app/views.py:257
+#: app/views.py:263
 msgid "Edit Payment Info Card"
 msgstr ""
 
-#: app/views.py:258
+#: app/views.py:264
 msgid "Payment Info Card"
 msgstr ""
 
-#: app/views.py:265
+#: app/views.py:271
 msgid "List Payment Info Generic"
 msgstr ""
 
-#: app/views.py:266
+#: app/views.py:272
 msgid "Add Payment Info Generic"
 msgstr ""
 
-#: app/views.py:267
+#: app/views.py:273
 msgid "Edit Payment Info Generic"
 msgstr ""
 
-#: app/views.py:268
+#: app/views.py:274
 msgid "Payment Info Generic"
 msgstr ""
 
-#: app/views.py:275
+#: app/views.py:281
 msgid "List Payment Methods"
 msgstr ""
 
-#: app/views.py:276
+#: app/views.py:282
 msgid "Add Payment Method"
 msgstr ""
 
-#: app/views.py:277
+#: app/views.py:283
 msgid "Edit Payment Method"
 msgstr ""
 
-#: app/views.py:278
+#: app/views.py:284
 msgid "Payment Method Info"
 msgstr ""
 
-#: app/views.py:293
+#: app/views.py:299
 msgid "Provider Code"
 msgstr "ငွေကြေးဝန်ဆောင်မှုပေးသူ၏ ကုဒ်"
 
-#: app/views.py:294 app/views.py:312
+#: app/views.py:300 app/views.py:318
 msgid "Name"
 msgstr "အမည်"
 
-#: app/views.py:296
+#: app/views.py:302
 msgid "List Providers"
 msgstr "ငွေကြေးဝန်ဆောင်မှုပေးသူများ စာရင်း"
 
-#: app/views.py:297
+#: app/views.py:303
 msgid "Add Provider"
 msgstr "ငွေကြေးဝန်ဆောင်မှုပေးသူ အသစ်ထည့်ရန်"
 
-#: app/views.py:298
+#: app/views.py:304
 msgid "Edit Provider"
 msgstr "ငွေကြေးဝန်ဆောင်မှုပေးသူ ပြင်ဆင်ရန်"
 
-#: app/views.py:299
+#: app/views.py:305
 msgid "Provider Info"
 msgstr "ငွေကြေးဝန်ဆောင်မှုပေးသူ အချက်အလက်"
 
-#: app/views.py:313
+#: app/views.py:319
 msgid "List Retailers"
 msgstr "ကိုယ်စားလှယ်များ စာရင်း"
 
-#: app/views.py:314
+#: app/views.py:320
 msgid "Add Retailer"
 msgstr "ကိုယ်စားလှယ် အသစ်ထည့်ရန်"
 
-#: app/views.py:315
+#: app/views.py:321
 msgid "Edit Retailer"
 msgstr "ကိုယ်စားလှယ် ပြင်ဆင်ရန်"
 
-#: app/views.py:316
+#: app/views.py:322
 msgid "Retailer Info"
 msgstr "ကိုယ်စားလှယ် အချက်အလက်"
 
-#: app/views.py:323
+#: app/views.py:329
 msgid "List User Payment Settings"
 msgstr ""
 
-#: app/views.py:324
+#: app/views.py:330
 msgid "Add User Payment Setting"
 msgstr ""
 
-#: app/views.py:325
+#: app/views.py:331
 msgid "Edit User Payment Setting"
 msgstr ""
 
-#: app/views.py:326
+#: app/views.py:332
 msgid "User Payment Setting Info"
 msgstr ""
 
-#: app/views.py:333
+#: app/views.py:339
 msgid "Transaction Date"
 msgstr ""
 
-#: app/views.py:334
+#: app/views.py:340
 msgid "Agent Type"
 msgstr "အေးဂျင့်အမျိုးအစား"
 
-#: app/views.py:335
+#: app/views.py:341
 msgid "Agent"
 msgstr "အေးဂျင့်"
 
-#: app/views.py:338
+#: app/views.py:344
 msgid "List Transactions"
 msgstr ""
 
-#: app/views.py:339
+#: app/views.py:345
 msgid "Add Transaction"
 msgstr ""
 
-#: app/views.py:340
+#: app/views.py:346
 msgid "Edit Transaction"
 msgstr ""
 
-#: app/views.py:341
+#: app/views.py:347
 msgid "Transaction Info"
 msgstr ""
 
-#: app/views.py:350
+#: app/views.py:355
 msgid "Regions/States"
 msgstr "တိုင်းဒေသကြီး/ပြည်နယ်များ"
 
-#: app/views.py:353
+#: app/views.py:358
 msgid "Manage"
 msgstr "စီမံရန်"
 
-#: app/views.py:358
+#: app/views.py:363
 msgid "Townships"
 msgstr "မြို့နယ်များ"
 
-#: app/views.py:364
+#: app/views.py:369
 msgid "Titles"
 msgstr "ဂုဏ်ပုဒ်များ"
 
-#: app/views.py:369
+#: app/views.py:374
 msgid "Customers"
 msgstr "သုံးစွဲသူများ"
 
-#: app/views.py:377
+#: app/views.py:382
 msgid "Meterboxes"
 msgstr "မီတာပုံးများ"
 
-#: app/views.py:384
+#: app/views.py:389
 msgid "Providers"
 msgstr "ငွေကြေးဝန်ဆောင်မှုပေးသူများ"
 
-#: app/views.py:391
+#: app/views.py:396
 msgid "Retailers"
 msgstr "ကိုယ်စားလှယ်များ"
 
-#: app/views.py:398
+#: app/views.py:403
 msgid "Transactions"
 msgstr "Transactions"
 
-#: app/views.py:405
+#: app/views.py:410
 msgid "Bills"
 msgstr "မီတာဘီလ်များ"
 
-#: app/views.py:413
+#: app/views.py:418
 msgid "Bill Details"
 msgstr "ရှင်းတမ်းအသေးစိတ်"
 
-#: app/views.py:420
+#: app/views.py:425
 msgid "Payment Info - Card"
 msgstr "ငွေပေးချေမှုအချက်အလက် - ကဒ်"
 
-#: app/views.py:423
+#: app/views.py:428
 msgid "Payment"
 msgstr "ပေးချေမှု"
 
-#: app/views.py:428
+#: app/views.py:433
 msgid "Payment Info - Generic"
 msgstr "ငွေပေးချေမှုအချက်အလက် - အထွေထွေ"
 
-#: app/views.py:435
+#: app/views.py:440
 msgid "Payment Methods"
 msgstr "ပေးချေမှုနည်းလမ်းများ"
 
-#: app/views.py:442
+#: app/views.py:447
 msgid "Payment Settings"
 msgstr "ငွေးပေးချေမှုဆိုင်ရာ အပြင်အဆင်များ"
+
+#: app/views.py:454
+msgid "Bill Status"
+msgstr "မီတာခ ဆောင်ထားခြင်း"
+
+#: app/views.py:457
+msgid "Check"
+msgstr "စစ်ဆေးရန်"
 
 #: app/templates/404.html:4
 msgid "Page not found"
 msgstr "စာမျက်နှာကို မတွေ့ပါ"
+
+#: app/templates/forms/check_bill_status.html:6
+#: app/templates/forms/check_bill_status_v2.html:24
+msgid "Search"
+msgstr "ရှာဖွေပါ"
+
+#: app/templates/forms/check_bill_status_v2.html:10
+msgid ""
+"\n"
+"            Check Bill Status\n"
+"        "
+msgstr ""
+"\n"
+"            မီတာခဆောင်ထားမှု စစ်ဆေးရန်\n"
+"        "
+
