@@ -10,7 +10,7 @@ from tqdm import tqdm
 def create_user(
     username="importer",
     email="importer@localhost",
-    first_name="Date",
+    first_name="Data",
     last_name="Importer",
 ):
     user = None
