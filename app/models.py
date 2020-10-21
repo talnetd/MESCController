@@ -177,6 +177,9 @@ class Bills(AuditMixin, Model):
     def find_by_ref_code(cls, ref_code):
         return db.session.query(cls).filter_by(ref_code=ref_code).first()
 
+    def __str__(self):
+        return f"{self.account_no} - {self.ref_code} - {self.meterbox}"
+
 
 class BillsDetails(AuditMixin, Model):
 
