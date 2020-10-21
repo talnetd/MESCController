@@ -25,20 +25,21 @@ def create_user(
         )
         db.session.add(user)
         db.session.commit()
+    db.session.expunge(user)
     return user
 
 
 class RowImporter:
-    def __init__(self, row, db, user):
+    def __init__(self, row, user):
         self.row = row
-        self.db = db
         self.user = user
+        self.db_session = db.create_scoped_session()
 
     def prepare_customer(self):
         username = self.row.get("meter_user_name")
         address = self.row.get("meter_user_address")
         customer = (
-            self.db.session.query(Customers)
+            self.db_session.query(Customers)
             .filter_by(username=username, address=address)
             .first()
         )
@@ -46,14 +47,14 @@ class RowImporter:
             customer = Customers(username=username, address=address)
             customer.created_by = self.user
             customer.changed_by = self.user
-            self.db.session.add(customer)
-            self.db.session.flush()
+            self.db_session.add(customer)
+            self.db_session.flush()
         return customer
 
     def prepare_meterbox(self, customer):
         box_number = self.row.get("meter_number")
         meterbox = (
-            self.db.session.query(Meterboxes)
+            self.db_session.query(Meterboxes)
             .filter_by(box_number=box_number, customer=customer)
             .first()
         )
@@ -61,15 +62,15 @@ class RowImporter:
             meterbox = Meterboxes(box_number=box_number, customer=customer)
             meterbox.created_by = self.user
             meterbox.changed_by = self.user
-            self.db.session.add(meterbox)
-            self.db.session.flush()
+            self.db_session.add(meterbox)
+            self.db_session.flush()
         return meterbox
 
     def prepare_bill(self, meterbox):
         ref_code = self.row.get("unituue_id")
         account_no = self.row.get("ledger_code")
         bill = (
-            self.db.session.query(Bills)
+            self.db_session.query(Bills)
             .filter_by(
                 account_no=account_no, ref_code=ref_code, meterbox=meterbox
             )
@@ -97,13 +98,13 @@ class RowImporter:
             )
             bill.created_by = self.user
             bill.changed_by = self.user
-            self.db.session.add(bill)
-            self.db.session.flush()
+            self.db_session.add(bill)
+            self.db_session.flush()
         return bill
 
     def prepare_bill_details(self, bill):
         total_bill_details = (
-            self.db.session.query(BillsDetails).filter_by(bill=bill).count()
+            self.db_session.query(BillsDetails).filter_by(bill=bill).count()
         )
         if total_bill_details < 1:
             for i in range(1, 8):
@@ -121,24 +122,22 @@ class RowImporter:
                 )
                 bill_detail.created_by = self.user
                 bill_detail.changed_by = self.user
-                self.db.session.add(bill_detail)
-                self.db.session.flush()
+                self.db_session.add(bill_detail)
+                self.db_session.flush()
 
     def load(self):
-        self.db.session.begin(subtransactions=True)
-
         try:
             customer = self.prepare_customer()
             meterbox = self.prepare_meterbox(customer)
             bill = self.prepare_bill(meterbox)
             self.prepare_bill_details(bill)
 
-            self.db.session.commit()
+            self.db_session.commit()
         except Exception as exc:
             click.echo(exc)
-            self.db.session.rollback()
+            self.db_session.rollback()
         finally:
-            self.db.session.close()
+            self.db_session.close()
 
 
 class XlsToDb:
@@ -165,7 +164,7 @@ class XlsToDb:
         self.path = path
         rows = self._prepare()
         for row in rows:
-            row_importer = RowImporter(row, db, self.user)
+            row_importer = RowImporter(row, self.user)
             row_importer.load()
             self.pbar.update()
 
