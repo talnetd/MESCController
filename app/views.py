@@ -1,13 +1,11 @@
 from flask import render_template
+from flask_appbuilder import BaseView, ModelView, expose
 from flask_appbuilder.models.sqla.interface import SQLAInterface
-from flask_appbuilder import ModelView, BaseView, expose
 from flask_babel import lazy_gettext as _
 
-from . import appbuilder, db
-from . import models
-from .form_views import ViewCheckBillStatus
+from . import appbuilder, db, models
 from .api_views import BillsAPI
-
+from .form_views import ViewCheckBillStatus
 
 """
     Create your Model based REST API::
@@ -46,15 +44,27 @@ from .api_views import BillsAPI
 def page_not_found(e):
     return (
         render_template(
-            "404.html", base_template=appbuilder.base_template, appbuilder=appbuilder
+            "404.html",
+            base_template=appbuilder.base_template,
+            appbuilder=appbuilder,
         ),
         404,
     )
 
 
 class MescBaseModelView(ModelView):
-    add_exclude_columns = ["created_on", "created_by", "changed_on", "changed_by"]
-    edit_exclude_columns = ["created_on", "created_by", "changed_on", "changed_by"]
+    add_exclude_columns = [
+        "created_on",
+        "created_by",
+        "changed_on",
+        "changed_by",
+    ]
+    edit_exclude_columns = [
+        "created_on",
+        "created_by",
+        "changed_on",
+        "changed_by",
+    ]
     formatters_columns = {
         "created_on": lambda x: x.strftime("%d %b %Y %I:%M:%S %p"),
         "changed_on": lambda x: x.strftime("%d %b %Y %I:%M:%S %p"),
@@ -130,9 +140,7 @@ class CustomersView(MescBaseModelView):
     datamodel = SQLAInterface(models.Customers)
     list_columns = [
         "id",
-        "title",
-        "name_en",
-        "name_my",
+        "username",
         "township",
         "region",
         "created_on",
@@ -141,9 +149,7 @@ class CustomersView(MescBaseModelView):
         "changed_by",
     ]
     label_columns = {
-        "title": _("Title"),
-        "name_en": _("Name (En)"),
-        "name_my": _("Name (My)"),
+        "username": _("Username"),
         "nrc_number": _("N.R.C"),
         "address": _("Address"),
         "region": _("Region"),
@@ -151,19 +157,28 @@ class CustomersView(MescBaseModelView):
         "phones": _("Phones"),
     }
     show_fieldsets = [
-        (_("Naming"), {"fields": ["title", "name_en", "name_my"]}),
+        (_("Naming"), {"fields": ["username"]}),
         (_("Additional"), {"fields": ["nrc_number"]}),
-        (_("Contact"), {"fields": ["address", "region", "township", "phones"]}),
+        (
+            _("Contact"),
+            {"fields": ["address", "region", "township", "phones"]},
+        ),
     ]
     add_fieldsets = [
-        (_("Naming"), {"fields": ["title", "name_en", "name_my"]}),
+        (_("Naming"), {"fields": ["username"]}),
         (_("Additional"), {"fields": ["nrc_number"]}),
-        (_("Contact"), {"fields": ["address", "region", "township", "phones"]}),
+        (
+            _("Contact"),
+            {"fields": ["address", "region", "township", "phones"]},
+        ),
     ]
     edit_fieldsets = [
-        (_("Naming"), {"fields": ["title", "name_en", "name_my"]}),
+        (_("Naming"), {"fields": ["username"]}),
         (_("Additional"), {"fields": ["nrc_number"]}),
-        (_("Contact"), {"fields": ["address", "region", "township", "phones"]}),
+        (
+            _("Contact"),
+            {"fields": ["address", "region", "township", "phones"]},
+        ),
     ]
     list_title = _("List Customers")
     add_title = _("Add Customer")
@@ -200,7 +215,7 @@ class BillView(MescBaseModelView):
         "previous_reading",
         "current_reading",
         "diff_reading",
-        "grand_total",
+        "ref_total_charge",
         "created_on",
         "created_by",
         "changed_on",
@@ -217,7 +232,7 @@ class BillView(MescBaseModelView):
         "sub_total": _("Subtotal"),
         "maintenance_fee": _("Maintenance Fee"),
         "horsepower_fee": _("Horsepower Fee"),
-        "grand_total": _("Grand Total"),
+        "ref_total_charge": _("Total Charge"),
         "remark": _("Remark"),
         "meterbox": _("Meterbox Number"),
     }
@@ -366,7 +381,11 @@ appbuilder.add_view(
 )
 # appbuilder.add_separator("Manage")
 appbuilder.add_view(
-    TitlesView, "Titles", label=_("Titles"), icon="fa-folder-open-o", category="Manage"
+    TitlesView,
+    "Titles",
+    label=_("Titles"),
+    icon="fa-folder-open-o",
+    category="Manage",
 )
 appbuilder.add_view(
     CustomersView,
