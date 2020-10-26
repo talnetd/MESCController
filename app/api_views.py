@@ -92,7 +92,7 @@ class BillsAPI(BaseApi):
                           addition:
                             type: number
                           terrif_code:
-                            type string
+                            type: string
                           total_charge:
                             type: number
                           user:
