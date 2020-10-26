@@ -132,6 +132,17 @@ class Meterboxes(AuditMixin, Model):
         return f"{self.box_number} - {self.customer}"
 
 
+class CommissionPolicy(AuditMixin, Model):
+
+    __tablename__ = "commission_policy"
+
+    id = Column(Integer, primary_key=True)
+    # NOTE: operator_type will be: "provider", "retailer"
+    operator_type = Column(String(20))
+    max_charge = Column(Float)
+    global_commission_fee = Column(Float)
+
+
 class Bills(AuditMixin, Model):
 
     __tablename__ = "bills"
@@ -235,6 +246,7 @@ class Providers(AuditMixin, Model):
     provider_code = Column(String(512))
     name = Column(String(512))
     user_id = Column(Integer)
+    commission_fee = Column(Float)
 
 
 class Retailers(AuditMixin, Model):

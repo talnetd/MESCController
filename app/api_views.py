@@ -9,7 +9,6 @@ from flask_appbuilder.security.decorators import protect
 from app import db
 from app.models import Bills
 
-
 logger = logging.getLogger()
 
 
@@ -82,20 +81,24 @@ class BillsAPI(BaseApi):
                             type: integer
                           diff_reading:
                             type: integer
-                          sub_total:
-                            type: number
                           maintenance_fee:
+                            type: number
+                          horsepower:
                             type: number
                           horsepower_fee:
                             type: number
-                          grand_total:
+                          multiply:
+                            type: number
+                          addition:
+                            type: number
+                          terrif_code:
+                            type string
+                          total_charge:
                             type: number
                           user:
                             type: object
                             properties:
-                              name_en:
-                                type: string
-                              name_my:
+                              username:
                                 type: string
                               address:
                                 type: string
@@ -110,20 +113,39 @@ class BillsAPI(BaseApi):
                 resp_data["previous_reading"] = found.previous_reading
                 resp_data["current_reading"] = found.current_reading
                 resp_data["diff_reading"] = found.diff_reading
-                resp_data["sub_total"] = found.sub_total
                 resp_data["maintenance_fee"] = found.maintenance_fee
+                resp_data["horsepower"] = found.horsepower
                 resp_data["horsepower_fee"] = found.horsepower_fee
-                resp_data["grand_total"] = found.grand_total
+                resp_data["multiply"] = found.ref_multiply
+                resp_data["addition"] = found.ref_addition
+                resp_data["terrif_code"] = found.ref_terrif_code
+                resp_data["total_charge"] = found.ref_total_charge
 
                 user_data = dict(
-                    name_en=found.meterbox.customer.name_en,
-                    name_my=found.meterbox.customer.name_my,
+                    username=found.meterbox.customer.username,
                     address=found.meterbox.customer.address,
                 )
                 resp_data.update(user=user_data)
 
             resp_data["is_billed"] = billed
             return self.response(HTTPStatus.OK, data=resp_data)
+
+    def execute_callback(self, url, data, ref_code=None):
+        try:
+            resp = requests.post(url, data=data)
+            if not resp.ok:
+                logger.warning(
+                    f"An error occurred when executing callback for {ref_code}."
+                )
+                logger.error(resp.text)
+            else:
+                logger.info(
+                    f"Successfully executed callback URL for {ref_code}"
+                )
+                logger.info(resp.text)
+        except Exception as exc:
+            logger.warning("Could not execute callback API.")
+            logger.error(exc)
 
     @expose("/pay", methods=["POST"])
     @protect()
@@ -196,29 +218,17 @@ class BillsAPI(BaseApi):
                     db.session.add(found)
                     db.session.commit()
 
-                    try:
-                        resp = requests.post(cb_url, data=cb_data)
-                        if not resp.ok:
-                            logger.warning(
-                                f"An error occurred when executing callback for {ref_code}."
-                            )
-                            logger.error(resp.text)
-                        else:
-                            logger.info(
-                                f"Successfully executed callback URL for {ref_code}"
-                            )
-                            logger.info(resp.text)
-                    except Exception as exc:
-                        logger.warning("Could not execute callback API.")
-                        logger.error(exc)
+                    self.execute_callback(cb_url, cb_data, ref_code=ref_code)
 
                     status = HTTPStatus.OK
-                    message = f"Meter Bill has been paid successfully."
+                    message = "Meter Bill has been paid successfully."
                 else:
                     status = HTTPStatus.CONFLICT
-                    message = f"Meter Bill has been already paid for {ref_code}."
+                    message = (
+                        f"Meter Bill has been already paid for {ref_code}."
+                    )
             else:
                 status = HTTPStatus.NOT_FOUND
                 message = f"Meter Bill not found for {ref_code}."
 
-            return self.response(status, message=message)
+        return self.response(status, message=message)
