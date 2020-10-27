@@ -1,5 +1,6 @@
 from flask_appbuilder import Model
 from flask_appbuilder.models.mixins import AuditMixin
+from flask_appbuilder.security.sqla.models import User
 from flask_babel import get_locale
 from flask_babel import lazy_gettext as _
 from sqlalchemy import (
@@ -24,6 +25,12 @@ AuditMixin will add automatic timestamp of created and modified by who
 
 
 """
+
+
+class UserExtension(User):
+    __tablename__ = "ab_user"
+    ref_code = Column(String(256))
+    commission_fee = Column(Float)
 
 
 class Regions(AuditMixin, Model):
@@ -132,13 +139,25 @@ class Meterboxes(AuditMixin, Model):
         return f"{self.box_number} - {self.customer}"
 
 
+class OperatorType(AuditMixin, Model):
+
+    __tablename__ = "operator_type"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(128))
+
+    def __str__(self):
+        return f"{self.name}"
+
+
 class CommissionPolicy(AuditMixin, Model):
 
     __tablename__ = "commission_policy"
 
     id = Column(Integer, primary_key=True)
     # NOTE: operator_type will be: "provider", "retailer"
-    operator_type = Column(String(20))
+    operator_type_id = Column(Integer, ForeignKey("operator_type.id"))
+    operator_type = relationship("OperatorType")
     max_charge = Column(Float)
     global_commission_fee = Column(Float)
 
@@ -236,26 +255,6 @@ class PaymentMethods(AuditMixin, Model):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(512))
-
-
-class Providers(AuditMixin, Model):
-
-    __tablename__ = "providers"
-
-    id = Column(Integer, primary_key=True)
-    provider_code = Column(String(512))
-    name = Column(String(512))
-    user_id = Column(Integer)
-    commission_fee = Column(Float)
-
-
-class Retailers(AuditMixin, Model):
-
-    __tablename__ = "retailers"
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String(512))
-    user_id = Column(Integer)
 
 
 class UserPaymentSettings(AuditMixin, Model):
