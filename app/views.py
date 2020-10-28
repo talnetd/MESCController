@@ -1,13 +1,11 @@
 from flask import render_template
+from flask_appbuilder import BaseView, ModelView, expose
 from flask_appbuilder.models.sqla.interface import SQLAInterface
-from flask_appbuilder import ModelView, BaseView, expose
 from flask_babel import lazy_gettext as _
 
-from . import appbuilder, db
-from . import models
-from .form_views import ViewCheckBillStatus
+from . import appbuilder, db, models
 from .api_views import BillsAPI
-
+from .form_views import ViewCheckBillStatus
 
 """
     Create your Model based REST API::
@@ -46,15 +44,27 @@ from .api_views import BillsAPI
 def page_not_found(e):
     return (
         render_template(
-            "404.html", base_template=appbuilder.base_template, appbuilder=appbuilder
+            "404.html",
+            base_template=appbuilder.base_template,
+            appbuilder=appbuilder,
         ),
         404,
     )
 
 
 class MescBaseModelView(ModelView):
-    add_exclude_columns = ["created_on", "created_by", "changed_on", "changed_by"]
-    edit_exclude_columns = ["created_on", "created_by", "changed_on", "changed_by"]
+    add_exclude_columns = [
+        "created_on",
+        "created_by",
+        "changed_on",
+        "changed_by",
+    ]
+    edit_exclude_columns = [
+        "created_on",
+        "created_by",
+        "changed_on",
+        "changed_by",
+    ]
     formatters_columns = {
         "created_on": lambda x: x.strftime("%d %b %Y %I:%M:%S %p"),
         "changed_on": lambda x: x.strftime("%d %b %Y %I:%M:%S %p"),
@@ -130,20 +140,15 @@ class CustomersView(MescBaseModelView):
     datamodel = SQLAInterface(models.Customers)
     list_columns = [
         "id",
-        "title",
-        "name_en",
-        "name_my",
-        "township",
-        "region",
+        "username",
+        "address",
         "created_on",
         "created_by",
         "changed_on",
         "changed_by",
     ]
     label_columns = {
-        "title": _("Title"),
-        "name_en": _("Name (En)"),
-        "name_my": _("Name (My)"),
+        "username": _("Username"),
         "nrc_number": _("N.R.C"),
         "address": _("Address"),
         "region": _("Region"),
@@ -151,19 +156,28 @@ class CustomersView(MescBaseModelView):
         "phones": _("Phones"),
     }
     show_fieldsets = [
-        (_("Naming"), {"fields": ["title", "name_en", "name_my"]}),
+        (_("Naming"), {"fields": ["username"]}),
         (_("Additional"), {"fields": ["nrc_number"]}),
-        (_("Contact"), {"fields": ["address", "region", "township", "phones"]}),
+        (
+            _("Contact"),
+            {"fields": ["address", "region", "township", "phones"]},
+        ),
     ]
     add_fieldsets = [
-        (_("Naming"), {"fields": ["title", "name_en", "name_my"]}),
+        (_("Naming"), {"fields": ["username"]}),
         (_("Additional"), {"fields": ["nrc_number"]}),
-        (_("Contact"), {"fields": ["address", "region", "township", "phones"]}),
+        (
+            _("Contact"),
+            {"fields": ["address", "region", "township", "phones"]},
+        ),
     ]
     edit_fieldsets = [
-        (_("Naming"), {"fields": ["title", "name_en", "name_my"]}),
+        (_("Naming"), {"fields": ["username"]}),
         (_("Additional"), {"fields": ["nrc_number"]}),
-        (_("Contact"), {"fields": ["address", "region", "township", "phones"]}),
+        (
+            _("Contact"),
+            {"fields": ["address", "region", "township", "phones"]},
+        ),
     ]
     list_title = _("List Customers")
     add_title = _("Add Customer")
@@ -186,45 +200,6 @@ class MeterboxView(MescBaseModelView):
     add_title = _("Add Meterbox")
     edit_title = _("Edit Meterbox")
     show_title = _("Meterbox Info")
-
-
-class BillView(MescBaseModelView):
-    datamodel = SQLAInterface(models.Bills)
-    list_columns = [
-        "id",
-        "account_no",
-        "ref_code",
-        "reading_date",
-        "due_date",
-        "meterbox",
-        "previous_reading",
-        "current_reading",
-        "diff_reading",
-        "grand_total",
-        "created_on",
-        "created_by",
-        "changed_on",
-        "changed_by",
-    ]
-    label_columns = {
-        "account_no": _("Account No."),
-        "ref_code": _("Reference Code"),
-        "reading_date": _("Reading Date"),
-        "due_date": _("Due Date"),
-        "previous_reading": _("Previous Reading"),
-        "current_reading": _("Current Reading"),
-        "diff_reading": _("Reading Difference"),
-        "sub_total": _("Subtotal"),
-        "maintenance_fee": _("Maintenance Fee"),
-        "horsepower_fee": _("Horsepower Fee"),
-        "grand_total": _("Grand Total"),
-        "remark": _("Remark"),
-        "meterbox": _("Meterbox Number"),
-    }
-    list_title = _("List Bills")
-    add_title = _("Add Bill")
-    edit_title = _("Edit Bill")
-    show_title = _("Bill Info")
 
 
 class BillDetailView(MescBaseModelView):
@@ -252,6 +227,46 @@ class BillDetailView(MescBaseModelView):
     add_title = _("Add Bill Detail")
     edit_title = _("Edit Bill Detail")
     show_title = _("Bill Detail Info")
+
+
+class BillView(MescBaseModelView):
+    datamodel = SQLAInterface(models.Bills)
+    list_columns = [
+        "id",
+        "account_no",
+        "ref_code",
+        "reading_date",
+        "due_date",
+        "meterbox",
+        "previous_reading",
+        "current_reading",
+        "diff_reading",
+        "ref_total_charge",
+        "created_on",
+        "created_by",
+        "changed_on",
+        "changed_by",
+    ]
+    label_columns = {
+        "account_no": _("Account No."),
+        "ref_code": _("Reference Code"),
+        "reading_date": _("Reading Date"),
+        "due_date": _("Due Date"),
+        "previous_reading": _("Previous Reading"),
+        "current_reading": _("Current Reading"),
+        "diff_reading": _("Reading Difference"),
+        "sub_total": _("Subtotal"),
+        "maintenance_fee": _("Maintenance Fee"),
+        "horsepower_fee": _("Horsepower Fee"),
+        "ref_total_charge": _("Total Charge"),
+        "remark": _("Remark"),
+        "meterbox": _("Meterbox Number"),
+    }
+    list_title = _("List Bills")
+    add_title = _("Add Bill")
+    edit_title = _("Edit Bill")
+    show_title = _("Bill Info")
+    related_views = [BillDetailView]
 
 
 class PaymentInfoCardView(MescBaseModelView):
@@ -284,44 +299,6 @@ class PaymentMethodsView(MescBaseModelView):
     show_title = _("Payment Method Info")
 
 
-class ProvidersView(MescBaseModelView):
-    datamodel = SQLAInterface(models.Providers)
-    list_columns = [
-        "id",
-        "provider_code",
-        "name",
-        "created_on",
-        "created_by",
-        "changed_on",
-        "changed_by",
-    ]
-    label_columns = {
-        "provider_code": _("Provider Code"),
-        "name": _("Name"),
-    }
-    list_title = _("List Providers")
-    add_title = _("Add Provider")
-    edit_title = _("Edit Provider")
-    show_title = _("Provider Info")
-
-
-class RetailersView(MescBaseModelView):
-    datamodel = SQLAInterface(models.Retailers)
-    list_columns = [
-        "id",
-        "name",
-        "created_on",
-        "created_by",
-        "changed_on",
-        "changed_by",
-    ]
-    label_columns = {"name": _("Name")}
-    list_title = _("List Retailers")
-    add_title = _("Add Retailer")
-    edit_title = _("Edit Retailer")
-    show_title = _("Retailer Info")
-
-
 class UserPaymentSettingsView(MescBaseModelView):
     datamodel = SQLAInterface(models.UserPaymentSettings)
     list_columns = []
@@ -347,6 +324,25 @@ class Transactions(MescBaseModelView):
     show_title = _("Transaction Info")
 
 
+class CommissionPolicy(MescBaseModelView):
+    datamodel = SQLAInterface(models.CommissionPolicy)
+    list_columns = [
+        "id",
+        "operator_type",
+        "max_charge",
+        "global_commission_fee",
+    ]
+    label_columns = {
+        "operator_type": _("Type"),
+        "max_charge": _("Max Charge"),
+        "global_commission_fee": _("Commission Fee"),
+    }
+    list_title = _("List Commission Policies")
+    add_title = _("Add Commission Policy")
+    edit_title = _("Edit Commission Policy")
+    show_title = _("Commission Policy Info")
+
+
 db.create_all()
 
 appbuilder.add_view(
@@ -366,7 +362,11 @@ appbuilder.add_view(
 )
 # appbuilder.add_separator("Manage")
 appbuilder.add_view(
-    TitlesView, "Titles", label=_("Titles"), icon="fa-folder-open-o", category="Manage"
+    TitlesView,
+    "Titles",
+    label=_("Titles"),
+    icon="fa-folder-open-o",
+    category="Manage",
 )
 appbuilder.add_view(
     CustomersView,
@@ -384,23 +384,16 @@ appbuilder.add_view(
     category="Manage",
 )
 appbuilder.add_view(
-    ProvidersView,
-    "Providers",
-    label=_("Providers"),
-    icon="fa-folder-open-o",
-    category="Manage",
-)
-appbuilder.add_view(
-    RetailersView,
-    "Retailers",
-    label=_("Retailers"),
-    icon="fa-folder-open-o",
-    category="Manage",
-)
-appbuilder.add_view(
     Transactions,
     "submenu_transactions",
     label=_("Transactions"),
+    icon="fa-folder-open-o",
+    category="Manage",
+)
+appbuilder.add_view(
+    CommissionPolicy,
+    "submenu_commission_policy",
+    label=_("Commission Policy"),
     icon="fa-folder-open-o",
     category="Manage",
 )
