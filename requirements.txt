@@ -2,3 +2,5 @@ python-dotenv
 flask-appbuilder
 gunicorn
 Faker
+xlrd
+tqdm
