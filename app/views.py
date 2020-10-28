@@ -141,8 +141,7 @@ class CustomersView(MescBaseModelView):
     list_columns = [
         "id",
         "username",
-        "township",
-        "region",
+        "address",
         "created_on",
         "created_by",
         "changed_on",
@@ -203,6 +202,33 @@ class MeterboxView(MescBaseModelView):
     show_title = _("Meterbox Info")
 
 
+class BillDetailView(MescBaseModelView):
+    datamodel = SQLAInterface(models.BillsDetails)
+    list_columns = [
+        "id",
+        "bill",
+        "line_item",
+        "unit_price",
+        "quantity",
+        "line_total",
+        "created_on",
+        "created_by",
+        "changed_on",
+        "changed_by",
+    ]
+    label_columns = {
+        "bill": _("Bill"),
+        "line_item": _("Line Item"),
+        "unit_price": _("Unit Price"),
+        "quantity": _("Quantity"),
+        "line_total": _("Line Total"),
+    }
+    list_title = _("List Bill Details")
+    add_title = _("Add Bill Detail")
+    edit_title = _("Edit Bill Detail")
+    show_title = _("Bill Detail Info")
+
+
 class BillView(MescBaseModelView):
     datamodel = SQLAInterface(models.Bills)
     list_columns = [
@@ -240,33 +266,7 @@ class BillView(MescBaseModelView):
     add_title = _("Add Bill")
     edit_title = _("Edit Bill")
     show_title = _("Bill Info")
-
-
-class BillDetailView(MescBaseModelView):
-    datamodel = SQLAInterface(models.BillsDetails)
-    list_columns = [
-        "id",
-        "bill",
-        "line_item",
-        "unit_price",
-        "quantity",
-        "line_total",
-        "created_on",
-        "created_by",
-        "changed_on",
-        "changed_by",
-    ]
-    label_columns = {
-        "bill": _("Bill"),
-        "line_item": _("Line Item"),
-        "unit_price": _("Unit Price"),
-        "quantity": _("Quantity"),
-        "line_total": _("Line Total"),
-    }
-    list_title = _("List Bill Details")
-    add_title = _("Add Bill Detail")
-    edit_title = _("Edit Bill Detail")
-    show_title = _("Bill Detail Info")
+    related_views = [BillDetailView]
 
 
 class PaymentInfoCardView(MescBaseModelView):
@@ -299,44 +299,6 @@ class PaymentMethodsView(MescBaseModelView):
     show_title = _("Payment Method Info")
 
 
-class ProvidersView(MescBaseModelView):
-    datamodel = SQLAInterface(models.Providers)
-    list_columns = [
-        "id",
-        "provider_code",
-        "name",
-        "created_on",
-        "created_by",
-        "changed_on",
-        "changed_by",
-    ]
-    label_columns = {
-        "provider_code": _("Provider Code"),
-        "name": _("Name"),
-    }
-    list_title = _("List Providers")
-    add_title = _("Add Provider")
-    edit_title = _("Edit Provider")
-    show_title = _("Provider Info")
-
-
-class RetailersView(MescBaseModelView):
-    datamodel = SQLAInterface(models.Retailers)
-    list_columns = [
-        "id",
-        "name",
-        "created_on",
-        "created_by",
-        "changed_on",
-        "changed_by",
-    ]
-    label_columns = {"name": _("Name")}
-    list_title = _("List Retailers")
-    add_title = _("Add Retailer")
-    edit_title = _("Edit Retailer")
-    show_title = _("Retailer Info")
-
-
 class UserPaymentSettingsView(MescBaseModelView):
     datamodel = SQLAInterface(models.UserPaymentSettings)
     list_columns = []
@@ -360,6 +322,25 @@ class Transactions(MescBaseModelView):
     add_title = _("Add Transaction")
     edit_title = _("Edit Transaction")
     show_title = _("Transaction Info")
+
+
+class CommissionPolicy(MescBaseModelView):
+    datamodel = SQLAInterface(models.CommissionPolicy)
+    list_columns = [
+        "id",
+        "operator_type",
+        "max_charge",
+        "global_commission_fee",
+    ]
+    label_columns = {
+        "operator_type": _("Type"),
+        "max_charge": _("Max Charge"),
+        "global_commission_fee": _("Commission Fee"),
+    }
+    list_title = _("List Commission Policies")
+    add_title = _("Add Commission Policy")
+    edit_title = _("Edit Commission Policy")
+    show_title = _("Commission Policy Info")
 
 
 db.create_all()
@@ -403,23 +384,16 @@ appbuilder.add_view(
     category="Manage",
 )
 appbuilder.add_view(
-    ProvidersView,
-    "Providers",
-    label=_("Providers"),
-    icon="fa-folder-open-o",
-    category="Manage",
-)
-appbuilder.add_view(
-    RetailersView,
-    "Retailers",
-    label=_("Retailers"),
-    icon="fa-folder-open-o",
-    category="Manage",
-)
-appbuilder.add_view(
     Transactions,
     "submenu_transactions",
     label=_("Transactions"),
+    icon="fa-folder-open-o",
+    category="Manage",
+)
+appbuilder.add_view(
+    CommissionPolicy,
+    "submenu_commission_policy",
+    label=_("Commission Policy"),
     icon="fa-folder-open-o",
     category="Manage",
 )
