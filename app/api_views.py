@@ -3,7 +3,9 @@ from http import HTTPStatus
 
 import requests
 from flask import request
-from flask_appbuilder.api import BaseApi, expose, safe
+from flask_appbuilder.api import BaseApi, ModelRestApi, expose, safe
+from flask_appbuilder.models.sqla.filters import FilterEqual
+from flask_appbuilder.models.sqla.interface import SQLAInterface
 from flask_appbuilder.security.decorators import protect
 
 from app import db
@@ -232,3 +234,36 @@ class BillsAPI(BaseApi):
                 message = f"Meter Bill not found for {ref_code}."
 
         return self.response(status, message=message)
+
+
+class BillModelApi(ModelRestApi):
+    exclude_route_methods = ("put", "post", "delete")
+    resource_name = "bill"
+    datamodel = SQLAInterface(Bills)
+    page_size = 20
+    list_columns = [
+        "id",
+        "account_no",
+        "reading_date",
+        "due_date",
+        "meterbox_id",
+        "ref_code",
+        "previous_reading",
+        "current_reading",
+        "diff_reading",
+        "sub_total",
+        "maintenance_fee",
+        "horsepower",
+        "horsepower_fee",
+        "ref_multiply",
+        "ref_addition",
+        "ref_terrif_code",
+        "ref_rate",
+        "grand_total",
+        "ref_total_charge",
+        "remark",
+        "meterbox",
+        "is_billed",
+        "created_by",
+        "changed_by",
+    ]

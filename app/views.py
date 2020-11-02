@@ -1,10 +1,10 @@
 from flask import render_template
-from flask_appbuilder import BaseView, ModelView, expose
+from flask_appbuilder import ModelView
 from flask_appbuilder.models.sqla.interface import SQLAInterface
 from flask_babel import lazy_gettext as _
 
 from . import appbuilder, db, models
-from .api_views import BillsAPI
+from .api_views import BillModelApi, BillsAPI
 from .form_views import ViewCheckBillStatus
 
 """
@@ -450,5 +450,6 @@ appbuilder.add_view(
     category_label=_("Check"),
 )
 appbuilder.add_api(BillsAPI)
+appbuilder.add_api(BillModelApi)
 
 # appbuilder.security_cleanup()
