@@ -2,9 +2,9 @@ import logging
 from http import HTTPStatus
 
 import requests
-from flask import request
+from flask import g, request
 from flask_appbuilder.api import BaseApi, ModelRestApi, expose, safe
-from flask_appbuilder.models.sqla.filters import FilterEqual
+from flask_appbuilder.models.sqla.filters import FilterRelationOneToManyEqual
 from flask_appbuilder.models.sqla.interface import SQLAInterface
 from flask_appbuilder.security.decorators import protect
 
@@ -12,6 +12,10 @@ from app import db
 from app.models import Bills
 
 logger = logging.getLogger()
+
+
+def get_user():
+    return g.user
 
 
 class BillsAPI(BaseApi):
@@ -241,6 +245,7 @@ class BillModelApi(ModelRestApi):
     resource_name = "bill"
     datamodel = SQLAInterface(Bills)
     page_size = 20
+    base_filter = [["changed_by", FilterRelationOneToManyEqual, get_user]]
     list_columns = [
         "id",
         "account_no",
