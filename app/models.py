@@ -207,6 +207,21 @@ class Bills(AuditMixin, Model):
     def find_by_ref_code(cls, ref_code):
         return db.session.query(cls).filter_by(ref_code=ref_code).first()
 
+    @classmethod
+    def find_by_meter_number_and_ref_code(cls, meter_number, ref_code):
+        meterbox = (
+            db.session.query(Meterboxes)
+            .filter_by(box_number=meter_number)
+            .first()
+        )
+        if meterbox:
+            bill = (
+                db.session.query(cls)
+                .filter_by(ref_code=ref_code, meterbox=meterbox)
+                .first()
+            )
+            return bill
+
     def __str__(self):
         return f"{self.account_no} - {self.ref_code} - {self.meterbox}"
 

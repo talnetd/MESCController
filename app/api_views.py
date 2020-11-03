@@ -29,6 +29,17 @@ class BillsAPI(BaseApi):
         ---
         get:
           summary: Check Meter Bill Status using Reference Code. This is PUBLIC API.
+          parameters:
+            - in: query
+              name: ref_code
+              schema:
+                type: string
+              description: Reference Code for Meter Bill
+            - in: query
+              name: meter_number
+              schema:
+                type: string
+              description: Meterbox Number for the Bill
           responses:
             200:
               description: status of Meter Bill
@@ -48,7 +59,10 @@ class BillsAPI(BaseApi):
         if request.method == "GET":
             billed = False
             ref_code = request.args.get("ref_code")
-            found = Bills.find_by_ref_code(ref_code)
+            meter_number = request.args.get("meter_number")
+            found = Bills.find_by_meter_number_and_ref_code(
+                meter_number, ref_code
+            )
             if found:
                 billed = found.is_billed or False
             resp_data["is_billed"] = billed
@@ -68,6 +82,11 @@ class BillsAPI(BaseApi):
               schema:
                 type: string
               description: Reference Code for Meter Bill
+            - in: query
+              name: meter_number
+              schema:
+                type: string
+              description: Meterbox Number for the Bill
           responses:
             200:
               description: status of Meter Bill
@@ -113,7 +132,10 @@ class BillsAPI(BaseApi):
         if request.method == "GET":
             billed = False
             ref_code = request.args.get("ref_code")
-            found = Bills.find_by_ref_code(ref_code)
+            meter_number = request.args.get("meter_number")
+            found = Bills.find_by_meter_number_and_ref_code(
+                meter_number, ref_code
+            )
             if found:
                 billed = found.is_billed or False
                 resp_data["previous_reading"] = found.previous_reading
@@ -170,6 +192,8 @@ class BillsAPI(BaseApi):
                   properties:
                     ref_code:
                       type: string
+                    meter_number:
+                      type: string
                     callback_url:
                       type: string
                     callback_data:
@@ -214,10 +238,13 @@ class BillsAPI(BaseApi):
             # Sample: using application/json
             json_data = request.get_json() or dict()
             ref_code = json_data.get("ref_code")
+            meter_number = json_data.get("meter_number")
             cb_url = json_data.get("callback_url")
             cb_data = json_data.get("callback_data")
 
-            found = Bills.find_by_ref_code(ref_code)
+            found = Bills.find_by_meter_number_and_ref_code(
+                meter_number, ref_code
+            )
             if found:
                 if not found.is_billed:
                     found.is_billed = True
