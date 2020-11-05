@@ -6,7 +6,7 @@ from flask import g, request
 from flask_appbuilder.api import BaseApi, ModelRestApi, expose, safe
 from flask_appbuilder.models.sqla.filters import FilterEqualFunction
 from flask_appbuilder.models.sqla.interface import SQLAInterface
-from flask_appbuilder.security.decorators import protect
+from flask_appbuilder.security.decorators import permission_name, protect
 
 from app import db
 from app.models import Bills
@@ -21,6 +21,13 @@ def get_user():
 class BillsAPI(BaseApi):
 
     resource_name = "bills"
+    base_permissions = [
+        "can_get",
+        "can_put",
+        "can_post",
+        "can_delete",
+        "can_info",
+    ]
 
     # @expose("/check/public", methods=["GET"])
     # @safe
@@ -71,6 +78,7 @@ class BillsAPI(BaseApi):
     @expose("/check")
     @protect()
     @safe
+    @permission_name("get")
     def check_private(self):
         """Check bill status in details. (PROTECTED API)
         ---
@@ -178,6 +186,7 @@ class BillsAPI(BaseApi):
     @expose("/pay", methods=["POST"])
     @protect()
     @safe
+    @permission_name("post")
     def pay_meter_bill(self):
         """Pay Meter Bill
         ---
