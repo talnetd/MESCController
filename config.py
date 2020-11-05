@@ -1,10 +1,11 @@
 import os
+
 from flask_appbuilder.security.manager import (
-    AUTH_OID,
-    AUTH_REMOTE_USER,
     AUTH_DB,
     AUTH_LDAP,
     AUTH_OAUTH,
+    AUTH_OID,
+    AUTH_REMOTE_USER,
 )
 from flask_babel import lazy_gettext as _
 
@@ -19,7 +20,9 @@ SECRET_KEY = "\2\1thisismyscretkey\1\2\e\y\y\h"
 
 # NOTE:
 # CREATE DATABASE mesc CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-SQLALCHEMY_DATABASE_URI = "mysql://dbuser:dbuser@192.168.64.7/mesc?charset=utf8"
+SQLALCHEMY_DATABASE_URI = (
+    "mysql://dbuser:dbuser@192.168.64.7/mesc?charset=utf8"
+)
 
 # SQLALCHEMY_DATABASE_URI = 'mysql://myapp@localhost/myapp'
 # SQLALCHEMY_DATABASE_URI = 'postgresql://root:password@localhost/myapp'
@@ -205,6 +208,16 @@ FAB_ROLES = {
         ["Transactions", "can_show"],
         ["Transactions", "can_add"],
         ["Transactions", "can_list"],
+        ["BillsAPI", "can_get"],
+        ["BillsAPI", "can_put"],
+        ["BillsAPI", "can_post"],
+        ["BillsAPI", "can_delete"],
+        ["BillsAPI", "can_info"],
+        ["BillModelApi", "can_get"],
+        ["BillModelApi", "can_put"],
+        ["BillModelApi", "can_post"],
+        ["BillModelApi", "can_delete"],
+        ["BillModelApi", "can_info"],
     ],
     "Retailer": [
         ["UserDBModelView", "resetmypassword"],
@@ -287,6 +300,16 @@ FAB_ROLES = {
         ["Transactions", "can_show"],
         ["Transactions", "can_add"],
         ["Transactions", "can_list"],
+        ["BillsAPI", "can_get"],
+        ["BillsAPI", "can_put"],
+        ["BillsAPI", "can_post"],
+        ["BillsAPI", "can_delete"],
+        ["BillsAPI", "can_info"],
+        ["BillModelApi", "can_get"],
+        ["BillModelApi", "can_put"],
+        ["BillModelApi", "can_post"],
+        ["BillModelApi", "can_delete"],
+        ["BillModelApi", "can_info"],
     ],
     "User": [
         ["public_menu_check", "menu_access"],
