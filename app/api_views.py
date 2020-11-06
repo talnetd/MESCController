@@ -9,7 +9,7 @@ from flask_appbuilder.models.sqla.interface import SQLAInterface
 from flask_appbuilder.security.decorators import permission_name, protect
 
 from app import db
-from app.models import Bills
+from app.models import Bills, BillsDetails
 
 logger = logging.getLogger()
 
@@ -106,6 +106,16 @@ class BillsAPI(BaseApi):
                       data:
                         type: object
                         properties:
+                          id:
+                            type: integer
+                          meterbox_id:
+                            type: integer
+                          due_date:
+                            type: string
+                          reading_date:
+                            type: string
+                          ref_code:
+                            type: string
                           is_billed:
                             type: boolean
                           previous_reading:
@@ -128,6 +138,8 @@ class BillsAPI(BaseApi):
                             type: string
                           total_charge:
                             type: number
+                          rate:
+                            type: number
                           user:
                             type: object
                             properties:
@@ -135,35 +147,79 @@ class BillsAPI(BaseApi):
                                 type: string
                               address:
                                 type: string
+                          meterbox:
+                            type: object
+                            properties:
+                              box_number:
+                                type: string
+                          bill_details:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                bill_id:
+                                  type: integer
+                                  description: id of Bills
+                                id:
+                                  type: integer
+                                  description: Primary Key of BillDetails
+                                line_item:
+                                  type: string
+                                line_total:
+                                  type: number
+                                pricing_policy_id:
+                                  type: integer
+                                quantity:
+                                  type: integer
+                                unit_price:
+                                  type: number
         """
         resp_data = dict()
         if request.method == "GET":
-            billed = False
             ref_code = request.args.get("ref_code")
             meter_number = request.args.get("meter_number")
             found = Bills.find_by_meter_number_and_ref_code(
                 meter_number, ref_code
             )
             if found:
-                billed = found.is_billed or False
-                resp_data["previous_reading"] = found.previous_reading
-                resp_data["current_reading"] = found.current_reading
-                resp_data["diff_reading"] = found.diff_reading
-                resp_data["maintenance_fee"] = found.maintenance_fee
-                resp_data["horsepower"] = found.horsepower
-                resp_data["horsepower_fee"] = found.horsepower_fee
-                resp_data["multiply"] = found.ref_multiply
-                resp_data["addition"] = found.ref_addition
-                resp_data["terrif_code"] = found.ref_terrif_code
-                resp_data["total_charge"] = found.ref_total_charge
+                resp_data = found.to_json()
+                tmp_ref_fields = [
+                    "ref_multiply",
+                    "ref_addition",
+                    "ref_terrif_code",
+                    "ref_total_charge",
+                    "ref_rate",
+                ]
+                for each in tmp_ref_fields:
+                    tmp_data = resp_data.pop(each)
+                    tmp_field = each.replace("ref_", "")
+                    resp_data[tmp_field] = tmp_data
+
+                resp_data["is_billed"] = resp_data.get("is_billed") or False
+                resp_data.pop("sub_total")
+                resp_data.pop("grand_total")
 
                 user_data = dict(
                     username=found.meterbox.customer.username,
                     address=found.meterbox.customer.address,
                 )
-                resp_data.update(user=user_data)
+                meterbox_data = dict(box_number=found.meterbox.box_number)
 
-            resp_data["is_billed"] = billed
+                resp_data.update(user=user_data)
+                resp_data.update(meterbox=meterbox_data)
+
+                bill_details = (
+                    db.session.query(BillsDetails)
+                    .filter_by(bill_id=found.id)
+                    .all()
+                )
+                resp_data["bill_details"] = [
+                    each.to_json() for each in bill_details
+                ]
+            else:
+                message = f"Bill not found for {ref_code}."
+                return self.response(HTTPStatus.NOT_FOUND, message=message)
+
             return self.response(HTTPStatus.OK, data=resp_data)
 
     def execute_callback(self, url, data, ref_code=None):
