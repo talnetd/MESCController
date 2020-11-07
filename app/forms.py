@@ -1,8 +1,8 @@
-from wtforms import StringField, Form, SubmitField
-from wtforms.validators import DataRequired
 from flask_appbuilder.fieldwidgets import BS3TextFieldWidget
 from flask_appbuilder.forms import DynamicForm
 from flask_babel import lazy_gettext as _
+from wtforms import Form, StringField
+from wtforms.validators import DataRequired
 
 
 class FormCheckBillStatus(DynamicForm):

@@ -200,6 +200,7 @@ class MeterboxView(MescBaseModelView):
     add_title = _("Add Meterbox")
     edit_title = _("Edit Meterbox")
     show_title = _("Meterbox Info")
+    search_columns = ["id", "box_number"]
 
 
 class BillDetailView(MescBaseModelView):
@@ -267,6 +268,13 @@ class BillView(MescBaseModelView):
     edit_title = _("Edit Bill")
     show_title = _("Bill Info")
     related_views = [BillDetailView]
+    search_columns = [
+        "id",
+        "account_no",
+        "ref_code",
+        "reading_date",
+        "due_date",
+    ]
 
 
 class PaymentInfoCardView(MescBaseModelView):

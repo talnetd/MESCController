@@ -134,6 +134,7 @@ class Meterboxes(AuditMixin, Model):
     box_number = Column(String(512))
     customer_id = Column(Integer, ForeignKey("customers.id"))
     customer = relationship("Customers")
+    bills = relationship("Bills", back_populates="meterbox", uselist=False)
 
     def __str__(self):
         return f"{self.box_number} - {self.customer}"
@@ -223,7 +224,7 @@ class Bills(AuditMixin, Model):
             return bill
 
     def __str__(self):
-        return f"{self.account_no} - {self.ref_code} - {self.meterbox}"
+        return f"{self.account_no} - {self.ref_code}"
 
 
 class BillsDetails(AuditMixin, Model):
