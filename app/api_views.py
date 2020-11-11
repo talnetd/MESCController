@@ -203,25 +203,26 @@ class BillsAPI(BaseApi):
 
                 # calculate total_charge
                 # formula: total_charge + (global_commission_fee or each_commission_fee)
-                user_ext = UserExtension.get_user(g.user.id)
-                each_commission_fee = user_ext.commission_fee
-                role = "N/A"
-                global_commission_fee = 0
-                if user_ext.is_provider:
-                    role = "provider"
-                elif user_ext.is_retailer:
-                    role = "retailer"
-                commission_policy_record = CommissionPolicy.get_policy_by_role(
-                    role
-                )
-                if commission_policy_record:
-                    global_commission_fee = (
-                        commission_policy_record.global_commission_fee
-                    )
-                if each_commission_fee:
-                    resp_data["total_charge"] += each_commission_fee
-                else:
-                    resp_data["total_charge"] += global_commission_fee
+                ###
+                # user_ext = UserExtension.get_user(g.user.id)
+                # each_commission_fee = user_ext.commission_fee
+                # role = "N/A"
+                # global_commission_fee = 0
+                # if user_ext.is_provider:
+                #     role = "provider"
+                # elif user_ext.is_retailer:
+                #     role = "retailer"
+                # commission_policy_record = CommissionPolicy.get_policy_by_role(
+                #     role
+                # )
+                # if commission_policy_record:
+                #     global_commission_fee = (
+                #         commission_policy_record.global_commission_fee
+                #     )
+                # if each_commission_fee:
+                #     resp_data["total_charge"] += each_commission_fee
+                # else:
+                #     resp_data["total_charge"] += global_commission_fee
 
                 user_data = dict(
                     username=found.meterbox.customer.username,
