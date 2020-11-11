@@ -9,7 +9,7 @@ from flask_appbuilder.models.sqla.interface import SQLAInterface
 from flask_appbuilder.security.decorators import permission_name, protect
 
 from app import db
-from app.models import Bills, BillsDetails
+from app.models import Bills, BillsDetails, CommissionPolicy, UserExtension
 
 logger = logging.getLogger()
 
@@ -140,6 +140,8 @@ class BillsAPI(BaseApi):
                             type: number
                           rate:
                             type: number
+                          exemption:
+                            type: number
                           user:
                             type: object
                             properties:
@@ -198,6 +200,28 @@ class BillsAPI(BaseApi):
                 resp_data["is_billed"] = resp_data.get("is_billed") or False
                 resp_data.pop("sub_total")
                 resp_data.pop("grand_total")
+
+                # calculate total_charge
+                # formula: total_charge + (global_commission_fee or each_commission_fee)
+                user_ext = UserExtension.get_user(g.user.id)
+                each_commission_fee = user_ext.commission_fee
+                role = "N/A"
+                global_commission_fee = 0
+                if user_ext.is_provider:
+                    role = "provider"
+                elif user_ext.is_retailer:
+                    role = "retailer"
+                commission_policy_record = CommissionPolicy.get_policy_by_role(
+                    role
+                )
+                if commission_policy_record:
+                    global_commission_fee = (
+                        commission_policy_record.global_commission_fee
+                    )
+                if each_commission_fee:
+                    resp_data["total_charge"] += each_commission_fee
+                else:
+                    resp_data["total_charge"] += global_commission_fee
 
                 user_data = dict(
                     username=found.meterbox.customer.username,
