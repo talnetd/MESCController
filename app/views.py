@@ -1,10 +1,10 @@
 from flask import render_template
-from flask_appbuilder import BaseView, ModelView, expose
+from flask_appbuilder import ModelView
 from flask_appbuilder.models.sqla.interface import SQLAInterface
 from flask_babel import lazy_gettext as _
 
 from . import appbuilder, db, models
-from .api_views import BillsAPI
+from .api_views import BillModelApi, BillsAPI
 from .form_views import ViewCheckBillStatus
 
 """
@@ -200,6 +200,7 @@ class MeterboxView(MescBaseModelView):
     add_title = _("Add Meterbox")
     edit_title = _("Edit Meterbox")
     show_title = _("Meterbox Info")
+    search_columns = ["id", "box_number"]
 
 
 class BillDetailView(MescBaseModelView):
@@ -267,6 +268,13 @@ class BillView(MescBaseModelView):
     edit_title = _("Edit Bill")
     show_title = _("Bill Info")
     related_views = [BillDetailView]
+    search_columns = [
+        "id",
+        "account_no",
+        "ref_code",
+        "reading_date",
+        "due_date",
+    ]
 
 
 class PaymentInfoCardView(MescBaseModelView):
@@ -450,5 +458,6 @@ appbuilder.add_view(
     category_label=_("Check"),
 )
 appbuilder.add_api(BillsAPI)
+appbuilder.add_api(BillModelApi)
 
 # appbuilder.security_cleanup()

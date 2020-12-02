@@ -32,6 +32,18 @@ class UserExtension(User):
     ref_code = Column(String(256))
     commission_fee = Column(Float)
 
+    @property
+    def is_provider(self):
+        return any([each.name.lower() == "provider" for each in self.roles])
+
+    @property
+    def is_retailer(self):
+        return any([each.name.lower() == "retailer" for each in self.roles])
+
+    @classmethod
+    def get_user(cls, user_id):
+        return db.session.query(cls).filter_by(id=user_id).first()
+
 
 class Regions(AuditMixin, Model):
 
@@ -134,6 +146,7 @@ class Meterboxes(AuditMixin, Model):
     box_number = Column(String(512))
     customer_id = Column(Integer, ForeignKey("customers.id"))
     customer = relationship("Customers")
+    bills = relationship("Bills", back_populates="meterbox", uselist=False)
 
     def __str__(self):
         return f"{self.box_number} - {self.customer}"
@@ -156,10 +169,27 @@ class CommissionPolicy(AuditMixin, Model):
 
     id = Column(Integer, primary_key=True)
     # NOTE: operator_type will be: "provider", "retailer"
-    operator_type_id = Column(Integer, ForeignKey("operator_type.id"))
+    operator_type_id = Column(
+        Integer, ForeignKey("operator_type.id"), unique=True
+    )
     operator_type = relationship("OperatorType")
     max_charge = Column(Float)
     global_commission_fee = Column(Float)
+
+    @classmethod
+    def get_policy_by_role(cls, role):
+        operator_type = (
+            db.session.query(OperatorType)
+            .filter(OperatorType.name.ilike(f"{role}%"))
+            .first()
+        )
+        if not operator_type:
+            return
+        return (
+            db.session.query(cls)
+            .filter_by(operator_type_id=operator_type.id)
+            .first()
+        )
 
 
 class Bills(AuditMixin, Model):
@@ -202,13 +232,29 @@ class Bills(AuditMixin, Model):
     remark = Column(Text)
     meterbox = relationship("Meterboxes")
     is_billed = Column(Boolean, default=False)
+    exemption = Column(Float)
 
     @classmethod
     def find_by_ref_code(cls, ref_code):
         return db.session.query(cls).filter_by(ref_code=ref_code).first()
 
+    @classmethod
+    def find_by_meter_number_and_ref_code(cls, meter_number, ref_code):
+        meterbox = (
+            db.session.query(Meterboxes)
+            .filter_by(box_number=meter_number)
+            .first()
+        )
+        if meterbox:
+            bill = (
+                db.session.query(cls)
+                .filter_by(ref_code=ref_code, meterbox=meterbox)
+                .first()
+            )
+            return bill
+
     def __str__(self):
-        return f"{self.account_no} - {self.ref_code} - {self.meterbox}"
+        return f"{self.account_no} - {self.ref_code}"
 
 
 class BillsDetails(AuditMixin, Model):
