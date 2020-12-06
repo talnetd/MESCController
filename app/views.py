@@ -6,7 +6,6 @@ from flask_babel import lazy_gettext as _
 from . import appbuilder, db, models
 from .api_views import BillModelApi, BillsAPI
 from .form_views import ViewCheckBillStatus
-
 """
     Create your Model based REST API::
 
@@ -34,7 +33,6 @@ from .form_views import ViewCheckBillStatus
         category_icon='fa-envelope'
     )
 """
-
 """
     Application wide 404 error handler
 """
@@ -156,27 +154,45 @@ class CustomersView(MescBaseModelView):
         "phones": _("Phones"),
     }
     show_fieldsets = [
-        (_("Naming"), {"fields": ["username"]}),
-        (_("Additional"), {"fields": ["nrc_number"]}),
+        (_("Naming"), {
+            "fields": ["username"]
+        }),
+        (_("Additional"), {
+            "fields": ["nrc_number"]
+        }),
         (
             _("Contact"),
-            {"fields": ["address", "region", "township", "phones"]},
+            {
+                "fields": ["address", "region", "township", "phones"]
+            },
         ),
     ]
     add_fieldsets = [
-        (_("Naming"), {"fields": ["username"]}),
-        (_("Additional"), {"fields": ["nrc_number"]}),
+        (_("Naming"), {
+            "fields": ["username"]
+        }),
+        (_("Additional"), {
+            "fields": ["nrc_number"]
+        }),
         (
             _("Contact"),
-            {"fields": ["address", "region", "township", "phones"]},
+            {
+                "fields": ["address", "region", "township", "phones"]
+            },
         ),
     ]
     edit_fieldsets = [
-        (_("Naming"), {"fields": ["username"]}),
-        (_("Additional"), {"fields": ["nrc_number"]}),
+        (_("Naming"), {
+            "fields": ["username"]
+        }),
+        (_("Additional"), {
+            "fields": ["nrc_number"]
+        }),
         (
             _("Contact"),
-            {"fields": ["address", "region", "township", "phones"]},
+            {
+                "fields": ["address", "region", "township", "phones"]
+            },
         ),
     ]
     list_title = _("List Customers")

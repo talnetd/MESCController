@@ -1,28 +1,27 @@
 import logging
 
 from flask import Flask
+from flask_appbuilder import SQLA, AppBuilder
 from flask_migrate import Migrate
-from flask_appbuilder import AppBuilder, SQLA
 
-# from flask_appbuilder.menu import Menu
 from app.index import MESCIndexView
-
+# from flask_appbuilder.menu import Menu
 """
  Logging configuration
 """
 
 logging.basicConfig(format="%(asctime)s:%(levelname)s:%(name)s:%(message)s")
 logging.getLogger().setLevel(logging.DEBUG)
-
 app = Flask(__name__)
 app.config.from_object("config")
 db = SQLA(app)
 migrate = Migrate(app, db)
 appbuilder = AppBuilder(
-    app, db.session, base_template="base.html", indexview=MESCIndexView,
+    app,
+    db.session,
+    base_template="base.html",
+    indexview=MESCIndexView,
 )
-
-
 """
 from sqlalchemy.engine import Engine
 from sqlalchemy import event
@@ -37,3 +36,4 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
 """
 
 from . import views
+from . import graphs
