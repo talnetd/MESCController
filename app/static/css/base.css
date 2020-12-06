@@ -15,6 +15,6 @@
 }
 
 /* modifications for theme: spacelab.css */
-.panel-heading > .panel-title > .accordion-toggle {
+.panel-heading>.panel-title>.accordion-toggle {
     color: #666666 !important;
 }
