@@ -1,3 +1,5 @@
+from datetime import datetime
+from dateutil.parser import parse
 from flask_appbuilder import Model
 from flask_appbuilder.models.mixins import AuditMixin
 from flask_appbuilder.security.sqla.models import User
@@ -16,7 +18,6 @@ from sqlalchemy import (
 from sqlalchemy.orm import relationship
 
 from . import db
-
 """
 
 You can use the extra Flask-AppBuilder fields and Mixin's
@@ -88,9 +89,8 @@ class PricingPolicy(AuditMixin, Model):
         message = label.format(self.unit_price, self.from_unit)
         if self.to_unit:
             label = _("Ks {} (from {} unit(s) to {} units)")
-            message = label.format(
-                self.unit_price, self.from_unit, self.to_unit
-            )
+            message = label.format(self.unit_price, self.from_unit,
+                                   self.to_unit)
         return message
 
 
@@ -169,27 +169,21 @@ class CommissionPolicy(AuditMixin, Model):
 
     id = Column(Integer, primary_key=True)
     # NOTE: operator_type will be: "provider", "retailer"
-    operator_type_id = Column(
-        Integer, ForeignKey("operator_type.id"), unique=True
-    )
+    operator_type_id = Column(Integer,
+                              ForeignKey("operator_type.id"),
+                              unique=True)
     operator_type = relationship("OperatorType")
     max_charge = Column(Float)
     global_commission_fee = Column(Float)
 
     @classmethod
     def get_policy_by_role(cls, role):
-        operator_type = (
-            db.session.query(OperatorType)
-            .filter(OperatorType.name.ilike(f"{role}%"))
-            .first()
-        )
+        operator_type = (db.session.query(OperatorType).filter(
+            OperatorType.name.ilike(f"{role}%")).first())
         if not operator_type:
             return
-        return (
-            db.session.query(cls)
-            .filter_by(operator_type_id=operator_type.id)
-            .first()
-        )
+        return (db.session.query(cls).filter_by(
+            operator_type_id=operator_type.id).first())
 
 
 class Bills(AuditMixin, Model):
@@ -240,17 +234,11 @@ class Bills(AuditMixin, Model):
 
     @classmethod
     def find_by_meter_number_and_ref_code(cls, meter_number, ref_code):
-        meterbox = (
-            db.session.query(Meterboxes)
-            .filter_by(box_number=meter_number)
-            .first()
-        )
+        meterbox = (db.session.query(Meterboxes).filter_by(
+            box_number=meter_number).first())
         if meterbox:
-            bill = (
-                db.session.query(cls)
-                .filter_by(ref_code=ref_code, meterbox=meterbox)
-                .first()
-            )
+            bill = (db.session.query(cls).filter_by(ref_code=ref_code,
+                                                    meterbox=meterbox).first())
             return bill
 
     def __str__(self):
@@ -265,9 +253,9 @@ class BillsDetails(AuditMixin, Model):
     bill_id = Column(Integer, ForeignKey("bills.id"))
     line_item = Column(String(512))
     unit_price = Column(Float)
-    pricing_policy_id = Column(
-        Integer, ForeignKey("pricing_policy.id"), nullable=True
-    )
+    pricing_policy_id = Column(Integer,
+                               ForeignKey("pricing_policy.id"),
+                               nullable=True)
     quantity = Column(Integer)
     line_total = Column(Float)
     bill = relationship("Bills")
@@ -324,10 +312,25 @@ class Transactions(AuditMixin, Model):
     payer_type = Column(String(512))
     payer_id = Column(Integer)
     bill_id = Column(Integer, ForeignKey("bills.id"))
-    payment_setting_id = Column(
-        Integer, ForeignKey("user_payment_settings.id")
-    )
+    payment_setting_id = Column(Integer,
+                                ForeignKey("user_payment_settings.id"))
     grand_total = Column(Float)
     remark = Column(Text)
     bill = relationship("Bills")
     payment_setting = relationship("UserPaymentSettings")
+
+
+class ReportDailyBillCollected(Model):
+
+    __tablename__ = "report_daily_bill_collected"
+
+    collected_date = Column(DateTime, primary_key=True)
+    total = Column(Integer)
+
+    def month_year(self):
+        tmp_date = self.collected_date
+        return datetime(tmp_date.year, tmp_date.month, 1)
+
+    def year(self):
+        tmp_date = self.collected_date
+        return datetime(tmp_date.year, 1, 1)
