@@ -14,15 +14,13 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 # Your App secret key
 SECRET_KEY = "\2\1thisismyscretkey\1\2\e\y\y\h"
 
-
 # The SQLAlchemy connection string.
 # SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir, "app.db")
 
 # NOTE:
 # CREATE DATABASE mesc CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 SQLALCHEMY_DATABASE_URI = (
-    "mysql://dbuser:dbuser@192.168.64.7/mesc?charset=utf8"
-)
+    "mysql://dbuser:dbuser@192.168.64.7/mesc?charset=utf8")
 
 # SQLALCHEMY_DATABASE_URI = 'mysql://myapp@localhost/myapp'
 # SQLALCHEMY_DATABASE_URI = 'postgresql://root:password@localhost/myapp'
@@ -81,7 +79,10 @@ BABEL_DEFAULT_LOCALE = "en"
 BABEL_DEFAULT_FOLDER = "translations"
 # The allowed translation for you app
 LANGUAGES = {
-    "en": {"flag": "gb", "name": "English"},
+    "en": {
+        "flag": "gb",
+        "name": "English"
+    },
     # "pt": {"flag": "pt", "name": "Portuguese"},
     # "pt_BR": {"flag": "br", "name": "Pt Brazil"},
     # "es": {"flag": "es", "name": "Spanish"},
@@ -89,7 +90,10 @@ LANGUAGES = {
     # "zh": {"flag": "cn", "name": "Chinese"},
     # "ru": {"flag": "ru", "name": "Russian"},
     # "pl": {"flag": "pl", "name": "Polish"},
-    "my": {"flag": "mm", "name": "မြန်မာ"},
+    "my": {
+        "flag": "mm",
+        "name": "မြန်မာ"
+    },
 }
 # ---------------------------------------------------
 # Image and file configuration
@@ -148,7 +152,7 @@ FAB_ROLES = {
         ["submenu_payment_methods", "menu_access"],
         ["submenu_payment_info_generic", "menu_access"],
         ["submenu_payment_info_card", "menu_access"],
-        ["MeterboxView", "can_delete"],
+        # ["MeterboxView", "can_delete"],
         ["MeterboxView", "can_show"],
         ["MeterboxView", "can_edit"],
         ["MeterboxView", "can_add"],
@@ -156,7 +160,7 @@ FAB_ROLES = {
         ["MeterboxView", "can_download"],
         ["BillView", "can_download"],
         ["BillView", "can_edit"],
-        ["BillView", "can_delete"],
+        # ["BillView", "can_delete"],
         ["BillView", "can_show"],
         ["BillView", "can_add"],
         ["BillView", "can_list"],
@@ -204,19 +208,19 @@ FAB_ROLES = {
         # ["UserPaymentSettingsView", "can_list"],
         ["Transactions", "can_download"],
         ["Transactions", "can_edit"],
-        ["Transactions", "can_delete"],
+        # ["Transactions", "can_delete"],
         ["Transactions", "can_show"],
         ["Transactions", "can_add"],
         ["Transactions", "can_list"],
         ["BillsAPI", "can_get"],
         ["BillsAPI", "can_put"],
         ["BillsAPI", "can_post"],
-        ["BillsAPI", "can_delete"],
+        # ["BillsAPI", "can_delete"],
         ["BillsAPI", "can_info"],
         ["BillModelApi", "can_get"],
         ["BillModelApi", "can_put"],
         ["BillModelApi", "can_post"],
-        ["BillModelApi", "can_delete"],
+        # ["BillModelApi", "can_delete"],
         ["BillModelApi", "can_info"],
     ],
     "Retailer": [
@@ -240,7 +244,7 @@ FAB_ROLES = {
         ["submenu_payment_methods", "menu_access"],
         ["submenu_payment_info_generic", "menu_access"],
         ["submenu_payment_info_card", "menu_access"],
-        ["MeterboxView", "can_delete"],
+        # ["MeterboxView", "can_delete"],
         ["MeterboxView", "can_show"],
         ["MeterboxView", "can_edit"],
         ["MeterboxView", "can_add"],
@@ -248,7 +252,7 @@ FAB_ROLES = {
         ["MeterboxView", "can_download"],
         ["BillView", "can_download"],
         ["BillView", "can_edit"],
-        ["BillView", "can_delete"],
+        # ["BillView", "can_delete"],
         ["BillView", "can_show"],
         ["BillView", "can_add"],
         ["BillView", "can_list"],
@@ -296,19 +300,19 @@ FAB_ROLES = {
         # ["UserPaymentSettingsView", "can_list"],
         ["Transactions", "can_download"],
         ["Transactions", "can_edit"],
-        ["Transactions", "can_delete"],
+        # ["Transactions", "can_delete"],
         ["Transactions", "can_show"],
         ["Transactions", "can_add"],
         ["Transactions", "can_list"],
         ["BillsAPI", "can_get"],
         ["BillsAPI", "can_put"],
         ["BillsAPI", "can_post"],
-        ["BillsAPI", "can_delete"],
+        # ["BillsAPI", "can_delete"],
         ["BillsAPI", "can_info"],
         ["BillModelApi", "can_get"],
         ["BillModelApi", "can_put"],
         ["BillModelApi", "can_post"],
-        ["BillModelApi", "can_delete"],
+        # ["BillModelApi", "can_delete"],
         ["BillModelApi", "can_info"],
     ],
     "User": [
