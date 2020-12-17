@@ -46,6 +46,10 @@ class UserExtension(User):
         return db.session.query(cls).filter_by(id=user_id).first()
 
 
+class UserRole(Model):
+    __tablename__ = "ab_user_role"
+
+
 class Regions(AuditMixin, Model):
 
     __tablename__ = "regions"
@@ -334,3 +338,25 @@ class ReportDailyBillCollected(Model):
     def year(self):
         tmp_date = self.collected_date
         return datetime(tmp_date.year, 1, 1)
+
+
+class CreditBalance(AuditMixin, Model):
+
+    __tablename__ = "credit_balance"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("ab_user.id"))
+    user = relationship("User", foreign_keys=[user_id])
+    amount = Column(Float)
+
+
+class CreditTransactions(AuditMixin, Model):
+
+    __tablename__ = "credit_transactions"
+
+    id = Column(Integer, primary_key=True)
+    transaction_date = Column(DateTime, default=datetime.now)
+    user_id = Column(Integer, ForeignKey("ab_user.id"))
+    user = relationship("User", foreign_keys=[user_id])
+    amount = Column(Float)
+    remark = Column(Text)

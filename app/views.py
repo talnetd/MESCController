@@ -367,7 +367,7 @@ class CommissionPolicy(MescBaseModelView):
     show_title = _("Commission Policy Info")
 
 
-db.create_all()
+# db.create_all()
 
 appbuilder.add_view(
     RegionsView,
