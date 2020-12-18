@@ -41,6 +41,9 @@ class UserExtension(User):
     def is_retailer(self):
         return any([each.name.lower() == "retailer" for each in self.roles])
 
+    def has_role(self, role):
+        return any([each.name.lower() == role.lower() for each in self.roles])
+
     @classmethod
     def get_user(cls, user_id):
         return db.session.query(cls).filter_by(id=user_id).first()
@@ -355,8 +358,10 @@ class CreditTransactions(AuditMixin, Model):
     __tablename__ = "credit_transactions"
 
     id = Column(Integer, primary_key=True)
-    transaction_date = Column(DateTime, default=datetime.now)
-    user_id = Column(Integer, ForeignKey("ab_user.id"))
+    transaction_date = Column(DateTime,
+                              default=datetime.now().replace(microsecond=0),
+                              nullable=False)
+    user_id = Column(Integer, ForeignKey("ab_user.id"), nullable=False)
     user = relationship("User", foreign_keys=[user_id])
-    amount = Column(Float)
+    amount = Column(Float, nullable=False)
     remark = Column(Text)
