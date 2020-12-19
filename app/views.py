@@ -1,10 +1,11 @@
-from flask import render_template
+from flask import render_template, g
 from flask_appbuilder import ModelView
 from flask_appbuilder.models.sqla.interface import SQLAInterface
+from flask_appbuilder.models.sqla.filters import FilterInFunction
 from flask_babel import lazy_gettext as _
 
 from . import appbuilder, db, models
-from .api_views import BillModelApi, BillsAPI
+from .api_views import BillModelApi, BillsAPI, CreditAPI
 from .form_views import ViewCheckBillStatus
 """
     Create your Model based REST API::
@@ -36,6 +37,14 @@ from .form_views import ViewCheckBillStatus
 """
     Application wide 404 error handler
 """
+
+
+def get_user():
+    user_ext = models.UserExtension.get_user(g.user.id)
+    if user_ext.has_role("admin"):
+        return [each.id for each in db.session.query(models.User).all()]
+    else:
+        return [g.user.id]
 
 
 @appbuilder.app.errorhandler(404)
@@ -367,7 +376,57 @@ class CommissionPolicy(MescBaseModelView):
     show_title = _("Commission Policy Info")
 
 
-db.create_all()
+class CreditTransactionsView(MescBaseModelView):
+    datamodel = SQLAInterface(models.CreditTransactions)
+    list_columns = [
+        "id", "transaction_date", "user", "amount", "remark", "created_by"
+    ]
+    label_columns = {
+        "transaction_date": _("Credit On"),
+        "user": _("Credit To"),
+        "created_by": _("By")
+    }
+    base_filters = [["user_id", FilterInFunction, get_user]]
+
+    def post_add(self, item):
+        try:
+            balance = db.session.query(
+                models.CreditBalance).filter_by(user=item.user).first()
+            if not balance:
+                balance = models.CreditBalance()
+                balance.user = item.user
+                balance.amount = item.amount
+            else:
+                balance.amount += item.amount
+
+            db.session.add(balance)
+            db.session.commit()
+        except:
+            db.session.rollback()
+
+    def post_delete(self, item):
+        try:
+            balance = db.session.query(
+                models.CreditBalance).filter_by(user_id=item.user_id).first()
+            if balance:
+                balance.amount -= item.amount
+                db.session.add(balance)
+                db.session.commit()
+        except:
+            db.session.rollback()
+
+
+class CreditBalanceView(MescBaseModelView):
+    datamodel = SQLAInterface(models.CreditBalance)
+    list_columns = [
+        "id", "user", "amount", "created_by", "created_on", "changed_by",
+        "changed_on"
+    ]
+    base_filters = [["user_id", FilterInFunction, get_user]]
+
+
+# disabled by lmk on 2020-12-18
+# db.create_all()
 
 appbuilder.add_view(
     RegionsView,
@@ -421,6 +480,19 @@ appbuilder.add_view(
     icon="fa-folder-open-o",
     category="Manage",
 )
+appbuilder.add_separator("Manage")
+
+appbuilder.add_view(CreditBalanceView,
+                    "submenu_credit_balance",
+                    label=_("Credit Balance"),
+                    icon="fa-folder-open-o",
+                    category="Manage")
+appbuilder.add_view(CreditTransactionsView,
+                    "submenu_credit_transactions",
+                    label=_("Credit Transaction"),
+                    icon="fa-folder-open-o",
+                    category="Manage")
+
 appbuilder.add_view(
     BillView,
     "submenu_bills",
@@ -475,5 +547,6 @@ appbuilder.add_view(
 )
 appbuilder.add_api(BillsAPI)
 appbuilder.add_api(BillModelApi)
+appbuilder.add_api(CreditAPI)
 
 # appbuilder.security_cleanup()

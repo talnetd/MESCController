@@ -9,13 +9,56 @@ from flask_appbuilder.models.sqla.interface import SQLAInterface
 from flask_appbuilder.security.decorators import permission_name, protect
 
 from app import db
-from app.models import Bills, BillsDetails, CommissionPolicy, UserExtension
+from app.models import Bills, BillsDetails, CommissionPolicy, UserExtension, CreditBalance, CreditTransactions
 
 logger = logging.getLogger()
 
 
 def get_user():
     return g.user
+
+
+class CreditAPI(BaseApi):
+    resource_name = "credit"
+    base_permissions = [
+        "can_get",
+        "can_put",
+        "can_post",
+        "can_delete",
+        "can_info",
+    ]
+
+    @expose("/")
+    @protect()
+    @safe
+    @permission_name("get")
+    def get_info(self):
+        """Get Retailer Balance.
+        ---
+        get:
+          summary: Get Credit Balance and Credit Transactions of each retailer 
+          responses:
+            200:
+              description: Balance and Transaction List
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+
+        """
+        user = get_user()
+        balance = db.session.query(CreditBalance).filter_by(user=user).first()
+        resp = dict()
+        if balance:
+            resp = balance.to_json()
+        transactions = db.session.query(CreditTransactions).filter_by(
+            user=user).all()
+        if transactions:
+            resp["transactions"] = [each.to_json() for each in transactions]
+        return self.response(HTTPStatus.OK, data=resp)
 
 
 class BillsAPI(BaseApi):
@@ -68,8 +111,7 @@ class BillsAPI(BaseApi):
             ref_code = request.args.get("ref_code")
             meter_number = request.args.get("meter_number")
             found = Bills.find_by_meter_number_and_ref_code(
-                meter_number, ref_code
-            )
+                meter_number, ref_code)
             if found:
                 billed = found.is_billed or False
             resp_data["is_billed"] = billed
@@ -181,8 +223,7 @@ class BillsAPI(BaseApi):
             ref_code = request.args.get("ref_code")
             meter_number = request.args.get("meter_number")
             found = Bills.find_by_meter_number_and_ref_code(
-                meter_number, ref_code
-            )
+                meter_number, ref_code)
             if found:
                 resp_data = found.to_json()
                 tmp_ref_fields = [
@@ -233,11 +274,8 @@ class BillsAPI(BaseApi):
                 resp_data.update(user=user_data)
                 resp_data.update(meterbox=meterbox_data)
 
-                bill_details = (
-                    db.session.query(BillsDetails)
-                    .filter_by(bill_id=found.id)
-                    .all()
-                )
+                bill_details = (db.session.query(BillsDetails).filter_by(
+                    bill_id=found.id).all())
                 resp_data["bill_details"] = [
                     each.to_json() for each in bill_details
                 ]
@@ -257,8 +295,7 @@ class BillsAPI(BaseApi):
                 logger.error(resp.text)
             else:
                 logger.info(
-                    f"Successfully executed callback URL for {ref_code}"
-                )
+                    f"Successfully executed callback URL for {ref_code}")
                 logger.info(resp.text)
         except Exception as exc:
             logger.warning("Could not execute callback API.")
@@ -333,8 +370,7 @@ class BillsAPI(BaseApi):
             cb_data = json_data.get("callback_data")
 
             found = Bills.find_by_meter_number_and_ref_code(
-                meter_number, ref_code
-            )
+                meter_number, ref_code)
             if found:
                 if not found.is_billed:
                     found.is_billed = True
@@ -348,8 +384,7 @@ class BillsAPI(BaseApi):
                 else:
                     status = HTTPStatus.CONFLICT
                     message = (
-                        f"Meter Bill has been already paid for {ref_code}."
-                    )
+                        f"Meter Bill has been already paid for {ref_code}.")
             else:
                 status = HTTPStatus.NOT_FOUND
                 message = f"Meter Bill not found for {ref_code}."
