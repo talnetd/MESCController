@@ -23,7 +23,7 @@ def pretty_year(value):
 
 class BillListReportChart(GroupByChartView):
     datamodel = SQLAInterface(ReportDailyBillCollected)
-    chart_title = "Bill Collected List"
+    chart_title = "Total Collected Bills"
     chart_type = "ColumnChart"
     label_columns = {"collected_date": "Collected On"}
     search_columns = ["collected_date", "total"]
@@ -47,6 +47,6 @@ class BillListReportChart(GroupByChartView):
 
 appbuilder.add_view(BillListReportChart,
                     "submenu_bill_chart",
-                    label=_("Daily Bill Collected"),
+                    label=_("Bill Collection Chart"),
                     icon="fa-dashboard",
                     category="Report")
