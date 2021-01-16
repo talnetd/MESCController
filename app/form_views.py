@@ -19,9 +19,8 @@ class FormViewCheckBillStatus(PublicFormView):
         if record:
             if record.is_billed:
                 flash(
-                    _("Congrats! You already have paid Meter Bill for {}.").format(
-                        ref_code
-                    ),
+                    _("Congrats! You already have paid Meter Bill for {}.").
+                    format(ref_code),
                     "info",
                 )
             else:
@@ -35,7 +34,8 @@ class FormViewCheckBillStatus(PublicFormView):
                 )
         else:
             flash(
-                _("Sorry. We could not find Meter Bill for {}.").format(ref_code),
+                _("Sorry. We could not find Meter Bill for {}.").format(
+                    ref_code),
                 "danger",
             )
 
@@ -53,9 +53,8 @@ class ViewCheckBillStatus(PublicFormView):
             if record:
                 if record.is_billed:
                     flash(
-                        _("Congrats! You already have paid Meter Bill for {}.").format(
-                            ref_code
-                        ),
+                        _("Congrats! You already have paid Meter Bill for {}."
+                          ).format(ref_code),
                         "info",
                     )
                 else:
@@ -64,13 +63,16 @@ class ViewCheckBillStatus(PublicFormView):
                     if due_date:
                         message += "<br/><br/>DUE DATE IS {}."
                     flash(
-                        _(message).format(ref_code, due_date.strftime("%d %b %Y")),
+                        _(message).format(ref_code,
+                                          due_date.strftime("%d %b %Y")),
                         "warning",
                     )
             else:
                 flash(
-                    _("Sorry. We could not find Meter Bill for {}.").format(ref_code),
+                    _("Sorry. We could not find Meter Bill for {}.").format(
+                        ref_code),
                     "danger",
                 )
 
-        return self.render_template("forms/check_bill_status_v2.html", form=form)
+        return self.render_template("forms/check_bill_status_v2.html",
+                                    form=form)
