@@ -1,7 +1,15 @@
-from flask import render_template, g
+import csv
+from io import StringIO
+
+from flask import g, make_response, render_template
 from flask_appbuilder import ModelView
+from flask_appbuilder.api import expose
+from flask_appbuilder.baseviews import get_filter_args
+from flask_appbuilder.models.sqla.filters import (FilterEqual,
+                                                  FilterEqualFunction,
+                                                  FilterInFunction)
 from flask_appbuilder.models.sqla.interface import SQLAInterface
-from flask_appbuilder.models.sqla.filters import FilterInFunction
+from flask_appbuilder.widgets import ListWidget
 from flask_babel import lazy_gettext as _
 
 from . import appbuilder, db, models
@@ -425,6 +433,47 @@ class CreditBalanceView(MescBaseModelView):
     base_filters = [["user_id", FilterInFunction, get_user]]
 
 
+class DownloadBillsByPartnerWidget(ListWidget):
+    template = 'components/download_bills_by_partner.html'
+
+
+class ReportBillsCollectedByPartnersView(MescBaseModelView):
+    base_permissions = ['can_list', 'can_csv']
+    datamodel = SQLAInterface(models.ReportBillsCollectedByPartners)
+    base_filters = [["changed_by_fk", FilterInFunction, get_user]]
+    base_order = ("id", "asc")
+    list_columns = [
+        "collected_date",
+        "collected_bills",
+        "amount",
+        # "first_name",
+        # "last_name",
+        "username",
+        "ref_code",
+        "role",
+    ]
+
+    list_widget = DownloadBillsByPartnerWidget
+
+    @expose('/csv', methods=['GET'])
+    def download_csv(self):
+        get_filter_args(self._filters)
+        order_column, order_direction = self.base_order
+        count, lst = self.datamodel.query(self._filters, order_column,
+                                          order_direction)
+
+        sio = StringIO()
+        csv_writer = csv.DictWriter(sio, fieldnames=self.list_columns)
+        csv_writer.writeheader()
+        for item in self.datamodel.get_values(lst, self.list_columns):
+            csv_writer.writerow(item)
+        response = make_response(sio.getvalue())
+        cd = 'attachment; filename=mycsv.csv'
+        response.headers['Content-Disposition'] = cd
+        response.mimetype = 'text/csv'
+        return response
+
+
 # disabled by lmk on 2020-12-18
 # db.create_all()
 
@@ -545,6 +594,12 @@ appbuilder.add_view(
     category="public_menu_check",
     category_label=_("Check"),
 )
+appbuilder.add_view(ReportBillsCollectedByPartnersView,
+                    "submenu_bills_collected",
+                    label=_("Bills Collected by Partners"),
+                    icon="fa-table",
+                    category="Report")
+appbuilder.add_separator("Report")
 appbuilder.add_api(BillsAPI)
 appbuilder.add_api(BillModelApi)
 appbuilder.add_api(CreditAPI)
