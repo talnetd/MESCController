@@ -343,6 +343,22 @@ class ReportDailyBillCollected(Model):
         return datetime(tmp_date.year, 1, 1)
 
 
+class ReportBillsCollectedByPartners(Model):
+
+    __tablename__ = "bills_collected_by_partners"
+
+    collected_date = Column(DateTime, primary_key=True)
+    collected_bills = Column(Integer)
+    amount = Column(Float)
+    changed_by_fk = Column(Integer)
+    first_name = Column(Text)
+    last_name = Column(Text)
+    username = Column(Text)
+    ref_code = Column(Text)
+    role_id = Column(Integer)
+    role = Column(Text)
+
+
 class CreditBalance(AuditMixin, Model):
 
     __tablename__ = "credit_balance"
