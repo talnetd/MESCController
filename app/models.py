@@ -347,7 +347,8 @@ class ReportBillsCollectedByPartners(Model):
 
     __tablename__ = "bills_collected_by_partners"
 
-    collected_date = Column(DateTime, primary_key=True)
+    id = Column(DateTime, primary_key=True)
+    collected_date = Column(DateTime)
     collected_bills = Column(Integer)
     amount = Column(Float)
     changed_by_fk = Column(Integer)

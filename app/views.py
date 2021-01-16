@@ -1,8 +1,13 @@
+import csv
+from io import StringIO
+
 from flask import g, make_response, render_template
 from flask_appbuilder import ModelView
 from flask_appbuilder.api import expose
 from flask_appbuilder.baseviews import get_filter_args
-from flask_appbuilder.models.sqla.filters import FilterEqual, FilterInFunction
+from flask_appbuilder.models.sqla.filters import (FilterEqual,
+                                                  FilterEqualFunction,
+                                                  FilterInFunction)
 from flask_appbuilder.models.sqla.interface import SQLAInterface
 from flask_appbuilder.widgets import ListWidget
 from flask_babel import lazy_gettext as _
@@ -433,16 +438,18 @@ class DownloadBillsByPartnerWidget(ListWidget):
 
 
 class ReportBillsCollectedByPartnersView(MescBaseModelView):
+    base_permissions = ['can_list', 'can_csv']
     datamodel = SQLAInterface(models.ReportBillsCollectedByPartners)
-    base_filters = [["role", FilterEqual, "Provider"]]
+    base_filters = [["changed_by_fk", FilterInFunction, get_user]]
+    base_order = ("id", "asc")
     list_columns = [
         "collected_date",
         "collected_bills",
         "amount",
-        "first_name",
-        "last_name",
+        # "first_name",
+        # "last_name",
         "username",
-        "ref_code"
+        "ref_code",
         "role",
     ]
 
@@ -451,16 +458,16 @@ class ReportBillsCollectedByPartnersView(MescBaseModelView):
     @expose('/csv', methods=['GET'])
     def download_csv(self):
         get_filter_args(self._filters)
-        if self.base_order:
-            order_column, order_direction = self.base_order
-            count, lst = self.datamodel.query(self._filters, order_column,
-                                              order_direction)
-            csv = ''
-            for item in self.datamodel.get_values(lst, self.list_columns):
-                csv += str(item) + '\n'
-        else:
-            csv = ''
-        response = make_response(csv)
+        order_column, order_direction = self.base_order
+        count, lst = self.datamodel.query(self._filters, order_column,
+                                          order_direction)
+
+        sio = StringIO()
+        csv_writer = csv.DictWriter(sio, fieldnames=self.list_columns)
+        csv_writer.writeheader()
+        for item in self.datamodel.get_values(lst, self.list_columns):
+            csv_writer.writerow(item)
+        response = make_response(sio.getvalue())
         cd = 'attachment; filename=mycsv.csv'
         response.headers['Content-Disposition'] = cd
         response.mimetype = 'text/csv'
